@@ -1,0 +1,24 @@
+/* Coolors Exported Palette - https://coolors.co/49caf3-1f1d1e-ffffff-dff4fd */
+
+/* CSV */
+49CAF3,1F1D1E,FFFFFF,DFF4FD
+
+/* With # */
+#49CAF3, #1F1D1E, #FFFFFF, #DFF4FD
+
+/* Array */
+["49CAF3","1F1D1E","FFFFFF","DFF4FD"]
+
+/* Object */
+{"Vivid Sky Blue":"49CAF3","Eerie Black":"1F1D1E","White":"FFFFFF","Azure X 11 Web Color":"DFF4FD"}
+
+/* Extended Array */
+[{"name":"Vivid Sky Blue","hex":"49CAF3","rgb":[73,202,243],"cmyk":[70,17,0,5],"hsb":[194,70,95],"hsl":[194,88,62],"lab":[76,-22,-30]},{"name":"Eerie Black","hex":"1F1D1E","rgb":[31,29,30],"cmyk":[0,6,3,88],"hsb":[330,6,12],"hsl":[330,3,12],"lab":[11,1,0]},{"name":"White","hex":"FFFFFF","rgb":[255,255,255],"cmyk":[0,0,0,0],"hsb":[0,0,100],"hsl":[0,0,100],"lab":[100,0,0]},{"name":"Azure X 11 Web Color","hex":"DFF4FD","rgb":[223,244,253],"cmyk":[12,4,0,1],"hsb":[198,12,99],"hsl":[198,88,93],"lab":[95,-5,-7]}]
+
+/* XML */
+<palette>
+  <color name="Vivid Sky Blue" hex="49CAF3" r="73" g="202" b="243" />
+  <color name="Eerie Black" hex="1F1D1E" r="31" g="29" b="30" />
+  <color name="White" hex="FFFFFF" r="255" g="255" b="255" />
+  <color name="Azure X 11 Web Color" hex="DFF4FD" r="223" g="244" b="253" />
+</palette>

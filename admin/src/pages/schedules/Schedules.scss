@@ -1,0 +1,15 @@
+.nav.nav-pills .nav-link.active {
+  color: white;
+  border-radius: 0.5rem;
+  animation: 0.2s ease;
+  background: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%);
+}
+
+.date-picker-input {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
