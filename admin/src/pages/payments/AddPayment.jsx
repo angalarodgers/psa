@@ -4,14 +4,6 @@ import AddPaymentTabs from "./AddPaymentTabs";
 const AddPayment = () => {
   return (
     <div className="col-md-4">
-      <button
-        type="button"
-        className="btn btn-block btn-default mb-3"
-        data-bs-toggle="modal"
-        data-bs-target="#modal-form"
-      >
-        Form
-      </button>
       <div
         className="modal fade"
         id="modal-form"

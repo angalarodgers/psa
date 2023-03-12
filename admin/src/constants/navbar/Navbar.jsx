@@ -18,11 +18,7 @@ const Navbar = () => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li className="breadcrumb-item text-sm">
-              <a
-                className="btn btn-outline-primary btn-sm mb-0 me-3"
-                target="_blank"
-                href="#"
-              >
+              <a className="btn btn-outline-primary btn-sm mb-0 me-3" href="#">
                 Customer Page
               </a>
             </li>

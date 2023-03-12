@@ -1,26 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { makeRequest } from "../../axios";
+import {
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+import { useQuery } from "react-query";
 import AddPayment from "./AddPayment";
 import BankDeposit from "./BankDeposit";
 
 const Container = () => {
+  const [bal, setBal] = useState([]);
+  const { uisLoading, uerror, udata } = useQuery("getMyUsers", () =>
+    makeRequest.get("/pay/getAllPay").then((res) => {
+      setBal(res.data);
+      console.log(res.data);
+      return res.data;
+    })
+  );
+
+  const total = bal.reduce((acc, item) => acc + item.amount, 0);
   return (
     <>
       <div className="col-lg-12">
         <div className="row">
           <div className="col-xl-12">
             <div className="row">
-              <div className="col-md-3 mt-md-0 mt-4">
+              <div className="col-md-6 mt-md-0 mt-4">
                 <div className="card">
                   <div className="card-header mx-4 p-3 text-center">
                     <div className="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                      <i className="fas fa-landmark opacity-10" />
+                      <i className="fa fa-money opacity-10" />
                     </div>
                   </div>
                   <div className="card-body pt-0 p-3 text-center">
-                    <h6 className="text-center mb-0">Bank Deposit</h6>
+                    <h6 className="text-center mb-0">Account Balance</h6>
                     <span className="text-xs"></span>
                     <hr className="horizontal dark my-3" />
-                    <h5 className="mb-0">+$2000</h5>
+                    <h5 className="mb-0">${total}.00</h5>
                     <hr className="horizontal dark my-3" />
                     <a
                       className="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
@@ -28,35 +47,7 @@ const Container = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modal-default"
                     >
-                      Read More
-                      <i
-                        className="fas fa-arrow-right text-sm ms-1"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 mt-md-0 mt-4">
-                <div className="card">
-                  <div className="card-header mx-4 p-3 text-center">
-                    <div className="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                      <i className="fab fa-paypal opacity-10" />
-                    </div>
-                  </div>
-                  <div className="card-body pt-0 p-3 text-center">
-                    <h6 className="text-center mb-0">Paypal</h6>
-                    <span className="text-xs"></span>
-                    <hr className="horizontal dark my-3" />
-                    <h5 className="mb-0">$455.00</h5>
-                    <hr className="horizontal dark my-3" />
-                    <a
-                      className="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
-                      href="#"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal-default"
-                    >
-                      Read More
+                      View Money In
                       <i
                         className="fas fa-arrow-right text-sm ms-1"
                         aria-hidden="true"
@@ -66,7 +57,7 @@ const Container = () => {
                 </div>
               </div>
 
-              <div className="col-md-3 mt-md-0 mt-4">
+              <div className="col-md-6 mt-md-0 mt-4">
                 <div className="card">
                   <div className="card-header mx-4 p-3 text-center">
                     <div className="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
@@ -74,10 +65,10 @@ const Container = () => {
                     </div>
                   </div>
                   <div className="card-body pt-0 p-3 text-center">
-                    <h6 className="text-center mb-0">Cash</h6>
+                    <h6 className="text-center mb-0">Deductions</h6>
                     <span className="text-xs"></span>
                     <hr className="horizontal dark my-3" />
-                    <h5 className="mb-0">$455.00</h5>
+                    <h5 className="mb-0">$0.00</h5>
                     <hr className="horizontal dark my-3" />
                     <a
                       className="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
@@ -85,36 +76,7 @@ const Container = () => {
                       data-bs-toggle="modal"
                       data-bs-target="#modal-default"
                     >
-                      Read More
-                      <i
-                        className="fas fa-arrow-right text-sm ms-1"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-3 mt-md-0 mt-4">
-                <div className="card">
-                  <div className="card-header mx-4 p-3 text-center">
-                    <div className="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
-                      <i className="fa fa-money opacity-10" />
-                    </div>
-                  </div>
-                  <div className="card-body pt-0 p-3 text-center">
-                    <h6 className="text-center mb-0">M-Pesa</h6>
-                    <span className="text-xs"></span>
-                    <hr className="horizontal dark my-3" />
-                    <h5 className="mb-0">$455.00</h5>
-                    <hr className="horizontal dark my-3" />
-                    <a
-                      className="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
-                      href="#"
-                      data-bs-toggle="modal"
-                      data-bs-target="#modal-default"
-                    >
-                      Read More
+                      View Money Out
                       <i
                         className="fas fa-arrow-right text-sm ms-1"
                         aria-hidden="true"

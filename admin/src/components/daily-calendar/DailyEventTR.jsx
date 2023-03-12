@@ -131,19 +131,16 @@ const DailyEventTR = ({ event }) => {
               <div className="progress-info">
                 <div className="progress-percentage">
                   <span className="text-xs font-weight-bold">
-                    <EventPercentage
-                      tm={event.time}
-                      setPercentage={setPercentage}
-                    />
+                    100%
                     {/* <TimeDifferencePercentage start={event.s} end={event.e} /> */}
                   </span>
                 </div>
               </div>
               <div className="progress">
                 <div
-                  className={`progress-bar bg-gradient-info w-${percentage}`}
+                  className={`progress-bar bg-gradient-info w-${100}`}
                   role="progressbar"
-                  aria-valuenow={percentage}
+                  aria-valuenow={100}
                   aria-valuemin={0}
                   aria-valuemax={100}
                 />
