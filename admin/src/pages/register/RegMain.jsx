@@ -33,7 +33,7 @@ const RegMain = () => {
     } else {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/auth/register",
+          "https://api.proswimacademykenya.info/api/auth/register",
           inputs
         );
         console.log(res);
