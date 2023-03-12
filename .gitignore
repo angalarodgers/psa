@@ -10,6 +10,9 @@ lerna-debug.log*
 admin/node_modules
 server/node_modules
 swimmer/node_modules
+admin/.env
+server/.env
+swimmer/.env
 dist
 dist-ssr
 *.local
