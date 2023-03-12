@@ -18,26 +18,18 @@ const footer = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  href="https://www.creative-tim.com/presentation"
-                  className="nav-link text-muted"
-                  target="_blank"
-                >
+                <a href="#" className="nav-link text-muted" target="_blank">
                   About Us
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  href="https://www.creative-tim.com/blog"
-                  className="nav-link text-muted"
-                  target="_blank"
-                >
+                <a href="#" className="nav-link text-muted" target="_blank">
                   Swimming Events
                 </a>
               </li>
               <li className="nav-item">
                 <a
-                  href="https://www.creative-tim.com/license"
+                  href="#"
                   className="nav-link pe-0 text-muted"
                   target="_blank"
                 >
