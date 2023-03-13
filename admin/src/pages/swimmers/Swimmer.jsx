@@ -7,10 +7,10 @@ const Swimmer = ({ swimmer }) => {
       <div className="card card-profile card-plain">
         <div className="card-body text-center bg-white shadow border-radius-lg p-3">
           <a href="javascript:;">
-            <img
+            {/* <img
               className="w-100 border-radius-md"
               src="./assets/img/user.jpg"
-            />
+            /> */}
           </a>
           <small>Swimmer</small>
           <h5 className="mt-3 mb-1 d-md-block d-none">{swimmer.username}</h5>
