@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import {
@@ -25,11 +25,12 @@ import Payments from "./pages/payments/Payments";
 import Calendar from "./pages/calendar/Calendar";
 import AssignClass from "./pages/assign-class/AssignClass";
 import EventMembers from "./pages/event-members/EventMembers";
+import { AuthContext } from "./context/authContext";
 
 function App() {
   const [count, setCount] = useState(0);
 
-  const currentUser = true;
+  const currentUser = useContext(AuthContext);
   const queryClient = new QueryClient();
   const Layout = () => {
     return (
