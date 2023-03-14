@@ -12,7 +12,7 @@ const LoginNavbar = () => {
                 className="navbar-brand font-weight-bolder ms-lg-0 ms-3 "
                 href="../pages/dashboard.html"
               >
-                Pro-Swim Academy
+                Pro Swim Academy Kenya
               </a>
               <button
                 className="navbar-toggler shadow-none ms-2"
