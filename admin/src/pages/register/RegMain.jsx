@@ -40,10 +40,10 @@ const RegMain = () => {
         if (res.status === 200) {
           toast.success("Registered Successfully!");
           await sleep(3000);
-          //navigate("/");
+          navigate("/");
         }
       } catch (err) {
-        console.log(err);
+        //console.log(err);
         toast.error(err.response.data);
       }
     }
