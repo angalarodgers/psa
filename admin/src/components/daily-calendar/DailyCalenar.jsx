@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { Calendar, Modal, Form, Input, Button, Select } from "antd";
+import { Calendar, Modal, Form, Input, Button, Select, TimePicker } from "antd";
 
 import moment from "moment";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { makeRequest } from "../../axios";
 import toast, { Toaster } from "react-hot-toast";
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const DailyCalenar = () => {
   const [visible, setVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [sessions, setSessions] = useState([]);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [ageGroup, setAgeGroup] = useState("");
 
   const { data: events = {}, isLoading } = useQuery("Myevents", async () => {
     const { data } = await makeRequest.get("/events/getEvents");
@@ -40,27 +44,30 @@ const DailyCalenar = () => {
   const closeModal = () => {
     setVisible(false);
     setSelectedDate(null);
+    setStartTime("");
+    setEndTime("");
+    setAgeGroup("");
   };
 
   const handleFormSubmit = async (values) => {
-    const { title, description, timeFrame } = values;
+    const { title, description, timeFrame, startTime, endTime, ageGroup } =
+      values;
     const dateKey = selectedDate.format("YYYY-MM-DD");
-    const startTime = "07:00:00";
-    const endTime = "19:00:00";
-    const ageGroup = "none";
+    const start = startTime.format("HH:mm:ss");
+    const end = endTime.format("HH:mm:ss");
     const eventData = {
       title,
       description,
       date: dateKey,
       timeFrame,
-      startTime,
-      endTime,
+      start,
+      end,
       ageGroup,
     };
     console.log(eventData);
 
     const res = await makeRequest
-      .post("/events/addEvent", eventData)
+      .post("/events/saveCalendarEvent", eventData)
       .then(async () => {
         toast.success("Registered Successfully!");
         await sleep(2000);
@@ -114,25 +121,31 @@ const DailyCalenar = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Description"
-            name="description"
-            rules={[{ required: true, message: "Please enter a description" }]}
+            label="Select Age Group"
+            name="ageGroup"
+            rules={[{ required: true, message: "Please select an age group" }]}
           >
-            <Input.TextArea />
+            <Select>
+              <Select.Option value="">-- Select Age Group --</Select.Option>
+              <Select.Option value="adult">Adult</Select.Option>
+              <Select.Option value="child">Child</Select.Option>
+            </Select>
           </Form.Item>
+
           <Form.Item
             label="Select time frame"
             name="timeFrame"
-            rules={[{ required: true, message: "Please select a time frame" }]}
+            rules={[{ required: true, message: "Please select a Session" }]}
           >
             <Select>
+              <Select.Option value="">--Select Hour Session --</Select.Option>
               {serror
                 ? "Something Went Wring"
                 : sisLoading
                 ? "Loading"
                 : sessions.map((dt) => (
                     <Select.Option value={dt.s} key={dt.id}>
-                      {dt.session}, Start: {dt.startsAt}, End: {dt.endsAt}
+                      {dt.t} {dt.session}
                     </Select.Option>
                   ))}
 
@@ -140,6 +153,28 @@ const DailyCalenar = () => {
               <Select.Option value="14">Week</Select.Option>
               <Select.Option value="15">Month</Select.Option>
             </Select>
+          </Form.Item>
+          <Form.Item
+            label="Start Time"
+            name="startTime"
+            rules={[{ required: true, message: "Please enter a start time" }]}
+          >
+            <TimePicker format="HH:mm:ss" />
+          </Form.Item>
+
+          <Form.Item
+            label="End Time"
+            name="endTime"
+            rules={[{ required: true, message: "Please enter an end time" }]}
+          >
+            <TimePicker format="HH:mm:ss" />
+          </Form.Item>
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={[{ required: true, message: "Please enter a description" }]}
+          >
+            <Input.TextArea />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Add Event
