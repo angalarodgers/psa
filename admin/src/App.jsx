@@ -102,6 +102,10 @@ function App() {
           path: "/event-members",
           element: <EventMembers />,
         },
+        {
+          path: "/admin-profile",
+          element: <UserProfile />,
+        },
       ],
     },
     {
@@ -119,10 +123,6 @@ function App() {
     {
       path: "/reset-password",
       element: <ResetPassword />,
-    },
-    {
-      path: "/admin-profile",
-      element: <UserProfile />,
     },
   ]);
 
