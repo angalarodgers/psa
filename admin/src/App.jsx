@@ -26,6 +26,7 @@ import Calendar from "./pages/calendar/Calendar";
 import AssignClass from "./pages/assign-class/AssignClass";
 import EventMembers from "./pages/event-members/EventMembers";
 import { AuthContext } from "./context/authContext";
+import UserProfile from "./pages/profile/UserProfile";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -118,6 +119,10 @@ function App() {
     {
       path: "/reset-password",
       element: <ResetPassword />,
+    },
+    {
+      path: "/admin-profile",
+      element: <UserProfile />,
     },
   ]);
 

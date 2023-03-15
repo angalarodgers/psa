@@ -9,6 +9,11 @@ import { useState } from "react";
 const Sidebar = () => {
   const { currentUser } = useContext(AuthContext);
   const [balance, setBalance] = useState(0);
+  const [activeLink, setActiveLink] = useState(null);
+
+  const handleClick = (link) => {
+    setActiveLink(link);
+  };
   const navigate = useNavigate();
   const logout = async (e) => {
     e.preventDefault();
@@ -22,6 +27,7 @@ const Sidebar = () => {
       console.log(error);
     }
   };
+
   return (
     <aside
       className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 fixed "
@@ -46,10 +52,15 @@ const Sidebar = () => {
       <div
         className="collapse navbar-collapse  w-auto "
         id="sidenav-collapse-main"
+        style={{ height: "100vh" }}
       >
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link  active" href="/dashboard">
+            <a
+              onClick={() => handleClick("a")}
+              className={`nav-link ${activeLink === "a" ? "active" : ""}`}
+              href="/dashboard"
+            >
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -91,7 +102,11 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link  " href="/schedules">
+            <a
+              href="/schedules"
+              onClick={() => handleClick("b")}
+              className={`nav-link ${activeLink === "b" ? "active" : ""}`}
+            >
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -136,7 +151,11 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link  " href="/payments">
+            <a
+              onClick={() => handleClick("c")}
+              className={`nav-link ${activeLink === "c" ? "active" : ""}`}
+              href="/payments"
+            >
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -179,7 +198,11 @@ const Sidebar = () => {
           </li>
 
           <li className="nav-item">
-            <a className="nav-link  " href="/swimmers">
+            <a
+              onClick={() => handleClick("d")}
+              className={`nav-link ${activeLink === "d" ? "active" : ""}`}
+              href="/swimmers"
+            >
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -225,7 +248,11 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link  " href="/trainers">
+            <a
+              onClick={() => handleClick("e")}
+              className={`nav-link ${activeLink === "e" ? "active" : ""}`}
+              href="/trainers"
+            >
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -271,38 +298,6 @@ const Sidebar = () => {
             </a>
           </li>
         </ul>
-      </div>
-      <div className="sidenav-footer mx-3 ">
-        <div
-          className="card card-background shadow-none card-background-mask-secondary"
-          id="sidenavCard"
-        >
-          <div
-            className="full-background"
-            style={{
-              backgroundImage:
-                'url("../assets/img/curved-images/white-curved.jpg")',
-            }}
-          />
-          <div className="card-body text-start p-3 w-100">
-            <div className="docs-info">
-              <a
-                href="#"
-                target="_blank"
-                className="btn btn-white btn-sm w-100 mb-0"
-              >
-                Settings
-              </a>
-            </div>
-          </div>
-        </div>
-        <a
-          className="btn bg-gradient-primary mt-3 w-100"
-          href="#"
-          onClick={logout}
-        >
-          Logout
-        </a>
       </div>
     </aside>
   );

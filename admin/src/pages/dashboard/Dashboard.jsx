@@ -250,7 +250,7 @@ const Dashboard = () => {
                           className="dropdown-item border-radius-md"
                           href="javascript:;"
                         >
-                          Action
+                          <i className="fa fa-list-ol"></i> &nbsp; Schedules
                         </a>
                       </li>
                       <li>
@@ -258,7 +258,7 @@ const Dashboard = () => {
                           className="dropdown-item border-radius-md"
                           href="javascript:;"
                         >
-                          Another action
+                          <i className="fa fa-calendar"></i> &nbsp; Calendar
                         </a>
                       </li>
                       <li>
@@ -266,7 +266,7 @@ const Dashboard = () => {
                           className="dropdown-item border-radius-md"
                           href="javascript:;"
                         >
-                          Something else here
+                          <i className="fa fa-list-ol"></i> &nbsp; Diary
                         </a>
                       </li>
                     </ul>
