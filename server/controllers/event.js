@@ -213,3 +213,21 @@ export const saveCalendarEvent = (req, res) => {
     });
   });
 };
+
+export const getThisCustomerEvents = (req, res) => {
+  const token = req.cookies.accessToken;
+  const userId = parseInt(req.params.userId);
+  if (!token) return res.status(401).json("Not Logged In");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+    const q =
+      "SELECT * FROM events INNER JOIN eventcustomers ON events.id = eventcustomers.eventId WHERE eventcustomers.userId = ?";
+
+    db.query(q, [userId], (err, data) => {
+      if (err) return res.status(500).json(err);
+
+      return res.status(200).json(data);
+    });
+  });
+};
