@@ -3,7 +3,7 @@ import ViewUser from "./ViewUser";
 
 const Swimmer = ({ swimmer }) => {
   return (
-    <div className="col-md-4">
+    <div className="col-md-4 mb-2">
       <div className="card card-profile card-plain">
         <div className="card-body text-center bg-white shadow border-radius-lg p-3">
           <a href="javascript:;">
