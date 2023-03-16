@@ -53,12 +53,7 @@ const EventCustomersTR = ({ customer }) => {
     <tr key={customer.id}>
       <td>
         <div className="d-flex px-2 py-1">
-          <div>
-            <img
-              src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg"
-              className="avatar avatar-sm me-3"
-            />
-          </div>
+          <div></div>
           <div className="d-flex flex-column justify-content-center">
             <h6 className="mb-0 text-xs">{user.username}</h6>
             <p className="text-xs text-secondary mb-0">{user.email}</p>
