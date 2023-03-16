@@ -88,30 +88,6 @@ const DailyEventTR = ({ event }) => {
             {event.date} / {event.startTime}{" "}
           </span>
         </td>
-        <td className="align-middle text-center text-sm">
-          <div className="progress-wrapper mx-auto">
-            <div className="progress-info">
-              <div className="progress-percentage">
-                <span className="text-xs font-weight-bold">
-                  <EventPercentage
-                    tm={event.time}
-                    setPercentage={setPercentage}
-                  />
-                  {/* <TimeDifferencePercentage start={event.s} end={event.e} /> */}
-                </span>
-              </div>
-            </div>
-            <div className="progress">
-              <div
-                className={`progress-bar bg-gradient-info w-${percentage}`}
-                role="progressbar"
-                aria-valuenow={percentage}
-                aria-valuemin={0}
-                aria-valuemax={100}
-              />
-            </div>
-          </div>
-        </td>
         <td>
           <button
             type="button"
