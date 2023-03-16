@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { makeRequest } from "../../axios";
 import DailyEvents from "../../components/daily-calendar/DailyEvents";
+import { AuthContext } from "../../context/authContext";
+import { useQuery } from "react-query";
 
 const Dashboard = () => {
+  const { currentUser } = useContext(AuthContext);
+  const [pays, setPays] = useState([]);
+  const [events, setEvents] = useState([]);
+  const { acisLoading, acerror, acdata } = useQuery("GetClientPays", () =>
+    makeRequest.get("/pay/getCustomerPays/" + currentUser.id).then((res) => {
+      setPays(res.data);
+
+      return res.data;
+    })
+  );
+
+  const { l, er, ecdata } = useQuery("GetClientEvents", () =>
+    makeRequest
+      .get("/events/getThisCustomerEvents/" + currentUser.id)
+      .then((res) => {
+        setEvents(res.data);
+        console.log(res.data);
+        return res.data;
+      })
+  );
+
+  const today = new Date().toISOString().slice(0, 10); // Get today's date in the format "2023-02-27"
+  const todaysEvents = events.filter((event) => event.date === today); // Filter the events to only include those with today's date
+
+  const total = pays.reduce((acc, item) => acc + item.amount, 0);
   return (
     <>
       <div className="row">
@@ -16,7 +44,7 @@ const Dashboard = () => {
                         Today's Classes
                       </p>
                       <h5 className="font-weight-bolder mb-0">
-                        3
+                        {todaysEvents.length}
                         <span className="text-success text-sm font-weight-bolder">
                           .
                         </span>
@@ -47,7 +75,7 @@ const Dashboard = () => {
                         Balance
                       </p>
                       <h5 className="font-weight-bolder mb-0">
-                        KSH.53,000
+                        KSH.{total}
                         <span className="text-success text-sm font-weight-bolder">
                           .
                         </span>
@@ -78,7 +106,7 @@ const Dashboard = () => {
                   <h6>Today's Classes</h6>
                   <p className="text-sm mb-0">
                     <i className="fa fa-check text-info" aria-hidden="true" />
-                    <span className="font-weight-bold ms-1">30 done</span> this
+                    <span className="font-weight-bold ms-1">0 done</span> this
                     month
                   </p>
                 </div>
@@ -127,7 +155,7 @@ const Dashboard = () => {
             </div>
             <div className="card-body px-0 pb-2">
               <div className="table-responsive">
-                <DailyEvents />
+                <DailyEvents ents={todaysEvents} l={l} er={er} />
               </div>
             </div>
           </div>

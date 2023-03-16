@@ -1,143 +1,30 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { useQuery } from "react-query";
+import { makeRequest } from "../../../axios";
+import Pay from "./Pay";
+import { AuthContext } from "../../../context/authContext";
 
 const BankDepositsList = () => {
+  const { currentUser } = useContext(AuthContext);
+  const [pays, setPays] = useState([]);
+  const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
+    makeRequest.get("/pay/getCustomerPays/" + currentUser.id).then((res) => {
+      setPays(res.data);
+      console.log(res.data);
+      return res.data;
+    })
+  );
   return (
-    <div className="card">
+    <div className="card" style={{ width: "100%" }}>
       <div className="card-body pt-4 p-3">
-        <ul className="list-group">
-          <li className="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-            <div className="d-flex flex-column">
-              <h6 className="mb-3 text-sm">
-                KSH. <strong style={{ color: "green" }}>15,000</strong>
-              </h6>
-              <span className="mb-2 text-xs">
-                Customer Name:{" "}
-                <span className="text-dark font-weight-bold ms-sm-2">
-                  <a href="#" style={{ textDecoration: "underline" }}>
-                    Viking Burrito
-                  </a>
-                </span>
-              </span>
-              <span className="mb-2 text-xs">
-                Email Address:{" "}
-                <span className="text-dark ms-sm-2 font-weight-bold">
-                  oliver@burrito.com
-                </span>
-              </span>
-
-              <span className="text-xs">
-                Transaction Number:{" "}
-                <span className="text-dark ms-sm-2 font-weight-bold">
-                  FRB1235476
-                </span>
-              </span>
-            </div>
-            <div className="ms-auto text-end">
-              <a
-                className="btn btn-link text-danger text-gradient px-3 mb-0"
-                href="javascript:;"
-              >
-                <i className="far fa-trash-alt me-2" />
-                Delete
-              </a>
-              <a
-                className="btn btn-link text-dark px-3 mb-0"
-                href="javascript:;"
-              >
-                <i
-                  className="fas fa-pencil-alt text-dark me-2"
-                  aria-hidden="true"
-                />
-                Edit
-              </a>
-            </div>
-          </li>
-          <li className="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-            <div className="d-flex flex-column">
-              <h6 className="mb-3 text-sm">
-                KSH. <strong style={{ color: "green" }}>120,000</strong>
-              </h6>
-              <span className="mb-2 text-xs">
-                Company Name:{" "}
-                <span className="text-dark font-weight-bold ms-sm-2">
-                  Stone Tech Zone
-                </span>
-              </span>
-              <span className="mb-2 text-xs">
-                Email Address:{" "}
-                <span className="text-dark ms-sm-2 font-weight-bold">
-                  lucas@stone-tech.com
-                </span>
-              </span>
-              <span className="text-xs">
-                Transaction Number:{" "}
-                <span className="text-dark ms-sm-2 font-weight-bold">
-                  FRB1235476
-                </span>
-              </span>
-            </div>
-            <div className="ms-auto text-end">
-              <a
-                className="btn btn-link text-danger text-gradient px-3 mb-0"
-                href="javascript:;"
-              >
-                <i className="far fa-trash-alt me-2" />
-                Delete
-              </a>
-              <a
-                className="btn btn-link text-dark px-3 mb-0"
-                href="javascript:;"
-              >
-                <i
-                  className="fas fa-pencil-alt text-dark me-2"
-                  aria-hidden="true"
-                />
-                Edit
-              </a>
-            </div>
-          </li>
-          <li className="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-            <div className="d-flex flex-column">
-              <h6 className="mb-3 text-sm">Ethan James</h6>
-              <span className="mb-2 text-xs">
-                Company Name:{" "}
-                <span className="text-dark font-weight-bold ms-sm-2">
-                  Fiber Notion
-                </span>
-              </span>
-              <span className="mb-2 text-xs">
-                Email Address:{" "}
-                <span className="text-dark ms-sm-2 font-weight-bold">
-                  ethan@fiber.com
-                </span>
-              </span>
-              <span className="text-xs">
-                VAT Number:{" "}
-                <span className="text-dark ms-sm-2 font-weight-bold">
-                  FRB1235476
-                </span>
-              </span>
-            </div>
-            <div className="ms-auto text-end">
-              <a
-                className="btn btn-link text-danger text-gradient px-3 mb-0"
-                href="javascript:;"
-              >
-                <i className="far fa-trash-alt me-2" />
-                Delete
-              </a>
-              <a
-                className="btn btn-link text-dark px-3 mb-0"
-                href="javascript:;"
-              >
-                <i
-                  className="fas fa-pencil-alt text-dark me-2"
-                  aria-hidden="true"
-                />
-                Edit
-              </a>
-            </div>
-          </li>
+        <ul className="list-group" style={{ width: "100%" }}>
+          {acerror
+            ? "Something Went Wring"
+            : acisLoading
+            ? "Loading"
+            : pays.map((pay) => <Pay pay={pay} key={pay.id} />)}
         </ul>
       </div>
     </div>

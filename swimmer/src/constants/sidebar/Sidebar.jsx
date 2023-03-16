@@ -179,38 +179,6 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-      <div className="sidenav-footer mx-3 ">
-        <div
-          className="card card-background shadow-none card-background-mask-secondary"
-          id="sidenavCard"
-        >
-          <div
-            className="full-background"
-            style={{
-              backgroundImage:
-                'url("../assets/img/curved-images/white-curved.jpg")',
-            }}
-          />
-          <div className="card-body text-start p-3 w-100">
-            <div className="docs-info">
-              <a
-                href="#"
-                target="_blank"
-                className="btn btn-white btn-sm w-100 mb-0"
-              >
-                Settings
-              </a>
-            </div>
-          </div>
-        </div>
-        <a
-          className="btn bg-gradient-primary mt-3 w-100"
-          href="#"
-          onClick={logout}
-        >
-          Logout
-        </a>
-      </div>
     </aside>
   );
 };

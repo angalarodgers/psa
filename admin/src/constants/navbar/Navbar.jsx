@@ -229,7 +229,10 @@ const Navbar = () => {
                       <div className="d-flex flex-column justify-content-center">
                         <h6 className="text-sm font-weight-normal mb-1">
                           <hr className="horizontal dark mt-0" />
-                          <span className="font-weight-bold">
+                          <span
+                            className="font-weight-bold"
+                            style={{ color: "red" }}
+                          >
                             {" "}
                             <i className="fa fa-sign-out"></i> &nbsp; Sign-out
                           </span>
