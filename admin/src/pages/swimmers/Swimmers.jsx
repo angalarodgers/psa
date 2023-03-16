@@ -24,7 +24,7 @@ const Swimmers = () => {
 
           <div className="col-sm-4">
             <a
-              href="/assign-class"
+              href="/classes"
               className="btn btn-icon btn-3 btn-primary text-right m-2 mr-auto"
               type="button"
             >

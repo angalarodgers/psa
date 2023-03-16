@@ -27,6 +27,7 @@ import AssignClass from "./pages/assign-class/AssignClass";
 import EventMembers from "./pages/event-members/EventMembers";
 import { AuthContext } from "./context/authContext";
 import UserProfile from "./pages/profile/UserProfile";
+import Classes from "./pages/classes/Classes";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -105,6 +106,10 @@ function App() {
         {
           path: "/admin-profile",
           element: <UserProfile />,
+        },
+        {
+          path: "/classes",
+          element: <Classes />,
         },
       ],
     },
