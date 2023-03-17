@@ -204,12 +204,31 @@ export const deleteAssignedClass = (req, res) => {
 
   jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid");
-    const q = "DELETE FROM eventcustomers WHERE `id` = ?";
+    const q = "SELECT * FROM eventcustomers WHERE `id` = ?";
+    db.query(q, [assign_id], (e, d) => {
+      if (e) return res.status(500).json(e);
+      const q = "DELETE FROM eventcustomers WHERE `id` = ?";
 
-    db.query(q, [assign_id], (err, data) => {
-      if (err) return res.status(500).json(err);
+      db.query(q, [assign_id], (err, data) => {
+        if (err) return res.status(500).json(err);
 
-      return res.status(200).json("Removed Successfully!");
+        const q = "SELECT * FROM events WHERE `id` = ? ";
+        db.query(q, [d[0].eventId], (ee, dd) => {
+          if (ee) return res.status(500).json(ee);
+          if (dd[0]) {
+            var initialCount = dd[0].noStudents;
+            var updatedCount = initialCount - 1;
+            const q = "UPDATE events SET `noStudents` = ? WHERE `id` = ?";
+            const v = [updatedCount];
+            db.query(q, [v, d[0].eventId], (eee, ddd) => {
+              if (eee) return res.status(500).json(eee);
+              return res.status(200).json("Removed Successfully!");
+            });
+          } else {
+            return res.status(403).json("Token is not valid");
+          }
+        });
+      });
     });
   });
 };
