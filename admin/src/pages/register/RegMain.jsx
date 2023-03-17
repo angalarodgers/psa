@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import SwimmingQuote from "./SwimmingQuote";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const RegMain = () => {
   const [inputs, setInputs] = useState({
@@ -63,7 +64,7 @@ const RegMain = () => {
               <div className="col-lg-5 text-center mx-auto">
                 <h1 className="text-white mb-2 mt-5">Welcome!</h1>
                 <p className="text-lead text-white">
-                  The best place to learn how to swimm
+                  <SwimmingQuote />
                 </p>
               </div>
             </div>

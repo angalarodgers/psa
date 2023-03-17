@@ -13,21 +13,23 @@ import TimeDifferencePercentage from "./TimeDifferencePercentage";
 const DailyEventTR = ({ event }) => {
   const [percentage, setPercentage] = useState(0);
 
-  const targetTime = event.endTime; // Set the target time
+  const date = new Date(event.date); // Parse the event date string into a Date object
+  const targetTime = event.endTime; // Get the event end time
 
   const isTimePassed = () => {
     const now = new Date();
     const [targetHour, targetMinute, targetSecond] = targetTime.split(":");
     const targetDate = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
       targetHour,
       targetMinute,
       targetSecond
     );
     return now > targetDate;
   };
+
   const navigate = useNavigate();
   const assignStudent = (e, eventId) => {
     navigate({
