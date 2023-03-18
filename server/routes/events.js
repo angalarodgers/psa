@@ -8,6 +8,7 @@ import {
   getEventCustomers,
   saveCalendarEvent,
   getThisCustomerEvents,
+  deleteEvent,
 } from "../controllers/event.js";
 
 const router = express.Router();
@@ -20,5 +21,6 @@ router.get("/getEventTime/:tm", getEventTime);
 router.get("/getEvent/:eventId", getEvent);
 router.get("/getEventCustomers/:eventId", getEventCustomers);
 router.get("/getThisCustomerEvents/:userId", getThisCustomerEvents);
+router.delete("/deleteEvent/:eventId", deleteEvent);
 
 export default router;

@@ -233,3 +233,24 @@ export const getThisCustomerEvents = (req, res) => {
     });
   });
 };
+
+export const deleteEvent = (req, res) => {
+  const token = req.cookies.accessToken;
+  const eventId = parseInt(req.params.eventId);
+  if (!token) return res.status(401).json("Not Logged In");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const q = "DELETE FROM events WHERE `id` = ?";
+    db.query(q, [eventId], (err, result) => {
+      if (err) return res.status(500).json(err);
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json("Event not found");
+      }
+
+      return res.status(200).json("Event deleted successfully");
+    });
+  });
+};

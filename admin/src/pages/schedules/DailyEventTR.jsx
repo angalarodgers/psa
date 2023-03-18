@@ -77,6 +77,9 @@ const DailyEventTR = ({ event }) => {
             <span>{event.noStudents}</span>
           </td>
           <td className="align-middle text-center text-sm">
+            <span>{event.ageGroup}</span>
+          </td>
+          <td className="align-middle text-center text-sm">
             <span className="text-xs font-weight-bold">
               {" "}
               {event.date} / {event.startTime}{" "}
@@ -132,6 +135,9 @@ const DailyEventTR = ({ event }) => {
           </td>
           <td className="align-middle text-center text-sm">
             <span>{event.noStudents}</span>
+          </td>
+          <td className="align-middle text-center text-sm">
+            <span>{event.ageGroup}</span>
           </td>
           <td className="align-middle text-center text-sm">
             <span className="text-xs font-weight-bold">

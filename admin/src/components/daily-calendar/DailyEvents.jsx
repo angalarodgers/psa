@@ -45,6 +45,9 @@ const DailyEvents = () => {
                 <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                   Students
                 </th>
+                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                  Group
+                </th>
                 <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                   Date/Time
                 </th>

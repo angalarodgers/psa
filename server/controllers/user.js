@@ -249,3 +249,20 @@ export const deleteAssignedClass = (req, res) => {
     });
   });
 };
+
+export const deleteUser = (req, res) => {
+  const token = req.cookies.accessToken;
+  const client_id = parseInt(req.params.client_id);
+  if (!token) return res.status(401).json("Not Logged In");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+    const q = "DELETE FROM users WHERE `id` = ?";
+
+    db.query(q, [client_id], (err, result) => {
+      if (err) return res.status(500).json(err);
+
+      return res.status(200).json(result.affectedRows + " user deleted");
+    });
+  });
+};
