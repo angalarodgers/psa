@@ -15,12 +15,21 @@ const AddEventTabs = () => {
     startTime: "",
     endTime: "",
     ageGroup: "",
+    trainer: "",
   });
 
   const [sessions, setSessions] = useState([]);
+  const [trainers, setTrainers] = useState([]);
   const { sisLoading, serror, sdata } = useQuery("getSessions", () =>
     makeRequest.get("/events/getSessions").then((res) => {
       setSessions(res.data);
+      return res.data;
+    })
+  );
+
+  const { tsisLoading, tserror, tsdata } = useQuery("getTrainers", () =>
+    makeRequest.get("/users/getTrainers").then((res) => {
+      setTrainers(res.data);
       return res.data;
     })
   );
@@ -151,6 +160,29 @@ const AddEventTabs = () => {
                 </label>
               </div>
             </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="exampleFormControlSelect1">Assign Trainer</label>
+            <select
+              className="form-control"
+              id="exampleFormControlSelect1"
+              onChange={handleChange}
+              name="trainer"
+            >
+              <option value="" selected disabled>
+                -- Select Trainer --
+              </option>
+              {tserror
+                ? "Something Went Wring"
+                : tsisLoading
+                ? "Loading"
+                : trainers.map((dt) => (
+                    <option value={dt.username} key={dt.id}>
+                      {dt.id} {dt.username}
+                    </option>
+                  ))}
+            </select>
           </div>
 
           <div className="form-group">

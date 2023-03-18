@@ -131,7 +131,7 @@ const AssignClass = () => {
         </form>
       </div>
       <div className="col-sm-3 card-frame">
-        <h5>User</h5>
+        <h5>User to add</h5>
         {matchingUser && (
           <div>
             <p>
@@ -151,14 +151,11 @@ const AssignClass = () => {
         )}
       </div>
       <div className="col-sm-3 card-frame">
-        <h5>Trainer</h5>
-        {matchingUser && (
-          <div>
-            <p>Email: {matchingUser.email}</p>
-            <p>Username: {matchingUser.username}</p>
-            <p>User Type: {matchingUser.userType}</p>
-          </div>
-        )}
+        <h5>Trainer Assigned</h5>
+        <span>
+          {" "}
+          <strong>{ents.trainer}</strong>
+        </span>
       </div>
       <div className="col-sm-12 card">
         <EventClients eventId={eventId} />

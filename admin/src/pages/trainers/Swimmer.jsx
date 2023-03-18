@@ -12,7 +12,7 @@ const Swimmer = ({ swimmer }) => {
               src="./assets/img/user.jpg"
             /> */}
           </a>
-          <small>Swimmer</small>
+          <small>Trainer</small>
           <h5 className="mt-3 mb-1 d-md-block d-none">{swimmer.username}</h5>
           <p className="mb-1 d-md-none d-block text-sm font-weight-bold text-darker">
             {swimmer.username}

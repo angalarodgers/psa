@@ -6,11 +6,13 @@ import {
   addUser,
   assignToEvent,
   deleteAssignedClass,
+  getTrainers,
 } from "../controllers/user.js";
 
 const router = express.Router();
 
 router.get("/getCustomers", getCustomers);
+router.get("/getTrainers", getTrainers);
 router.get("/search", search);
 router.get("/getClient/:client_id", getClient);
 router.post("/addUser", addUser);

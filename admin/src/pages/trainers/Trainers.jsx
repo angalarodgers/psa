@@ -9,7 +9,7 @@ import AddUsers from "../../constants/AddUsers/AddUsers";
 const Trainers = () => {
   const [newUsers, setNewUsers] = useState([]);
   const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
-    makeRequest.get("/users/getCustomers").then((res) => {
+    makeRequest.get("/users/getTrainers").then((res) => {
       setNewUsers(res.data);
       return res.data;
     })

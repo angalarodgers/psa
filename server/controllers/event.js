@@ -48,7 +48,7 @@ export const saveEvent = (req, res) => {
     }
     console.log(tm, "-", indx);
     const q =
-      "INSERT INTO events (`title`,`description`,`date`,`time`,`indx`, `startTime`,`endTime`,`ageGroup`) VALUES (?)";
+      "INSERT INTO events (`title`,`description`,`date`,`time`,`indx`, `startTime`,`endTime`,`ageGroup`,`trainer`) VALUES (?)";
     const values = [
       req.body.title,
       req.body.description,
@@ -58,6 +58,7 @@ export const saveEvent = (req, res) => {
       req.body.startTime,
       req.body.endTime,
       req.body.ageGroup,
+      req.body.trainer,
     ];
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -196,7 +197,7 @@ export const saveCalendarEvent = (req, res) => {
     }
     console.log(tm, "-", indx);
     const q =
-      "INSERT INTO events (`title`,`description`,`date`,`time`,`indx`, `startTime`,`endTime`,`ageGroup`) VALUES (?)";
+      "INSERT INTO events (`title`,`description`,`date`,`time`,`indx`, `startTime`,`endTime`,`ageGroup`,`trainer`) VALUES (?)";
     const values = [
       req.body.title,
       req.body.description,
@@ -206,6 +207,7 @@ export const saveCalendarEvent = (req, res) => {
       req.body.start,
       req.body.end,
       req.body.ageGroup,
+      req.body.trainer,
     ];
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);

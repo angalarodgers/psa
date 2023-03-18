@@ -10,7 +10,7 @@ const LoginNavbar = () => {
             <div className="container-fluid pe-0">
               <a
                 className="navbar-brand font-weight-bolder ms-lg-0 ms-3 "
-                href="../pages/dashboard.html"
+                href="#"
               >
                 Pro Swim Academy Kenya
               </a>
