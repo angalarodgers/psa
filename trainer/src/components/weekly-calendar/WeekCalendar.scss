@@ -1,0 +1,43 @@
+.week-calendar {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.week.current-week {
+  background-color: lightgreen;
+}
+
+.week:hover {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+.week-number {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.week-dates {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.date:hover {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: copy;
+}
