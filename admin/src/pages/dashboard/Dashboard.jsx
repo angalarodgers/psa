@@ -4,6 +4,7 @@ import { makeRequest } from "../../axios";
 
 import { useQuery } from "react-query";
 import DailyEvents from "../../components/daily-calendar/DailyEvents";
+import SwimmingQuote from "../register/SwimmingQuote";
 
 const Dashboard = () => {
   const [todayClasses, setTodayClasses] = useState([]);
@@ -181,8 +182,7 @@ const Dashboard = () => {
                       Everything you need to know
                     </h5>
                     <p className="mb-5">
-                      Sharing the learn to swim journey, while teaching the
-                      families to love and respect the water
+                      <SwimmingQuote />
                     </p>
                     <a
                       className="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
