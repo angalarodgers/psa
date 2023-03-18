@@ -68,15 +68,7 @@ const DailyEventTR = ({ event }) => {
         </td>
         <td className="align-middle text-center text-sm">
           <div className="avatar-group mt-2">
-            <a
-              href="#"
-              className="avatar avatar-xs rounded-circle"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Ryan Tompson"
-            >
-              <img src="../assets/img/team-1.jpg" alt="team1" />
-            </a>
+            <span>{event.trainer}</span>
           </div>
         </td>
         <td>
