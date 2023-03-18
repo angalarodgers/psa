@@ -1,6 +1,8 @@
 import express from "express";
 import {
-  login,
+  loginAdmin,
+  loginClient,
+  loginTrainer,
   register,
   logout,
   sendOtp,
@@ -10,7 +12,9 @@ import {
 
 const router = express.Router();
 
-router.post("/login", login);
+router.post("/loginAdmin", loginAdmin);
+router.post("/loginTrainer", loginTrainer);
+router.post("/loginClient", loginClient);
 router.post("/register", register);
 router.post("/logout", logout);
 router.post("/sendOtp", sendOtp);

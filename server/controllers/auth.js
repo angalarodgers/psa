@@ -97,9 +97,62 @@ export const register = async (req, res) => {
   });
 };
 
-export const login = async (req, res) => {
+export const loginAdmin = async (req, res) => {
   //SELECT USER
-  const q = "SELECT * FROM users  WHERE email = ?";
+  const q = "SELECT * FROM users  WHERE `userType` = 'admin' AND `email` = ?";
+  const values = [req.body.email];
+  db.query(q, [values], async (error, data) => {
+    if (error) return res.status(500).json(error);
+    if (data.length === 0) return res.status(404).json("User Not Found!");
+    console.log(data[0].password);
+    console.log(req.body.password);
+    const checkPassword = bcrypt.compareSync(
+      req.body.password,
+      data[0].password
+    );
+    if (!checkPassword)
+      return res.status(400).json("Wrong username or password");
+    const token = jwt.sign({ id: data[0].id }, "secretkey");
+    const { password, ...others } = data[0];
+    res
+      .cookie("accessToken", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(others);
+  });
+};
+
+export const loginClient = async (req, res) => {
+  //SELECT USER
+  const q =
+    "SELECT * FROM users  WHERE `userType` = 'customer' AND `email` = ?";
+  const values = [req.body.email];
+  db.query(q, [values], async (error, data) => {
+    if (error) return res.status(500).json(error);
+    if (data.length === 0) return res.status(404).json("User Not Found!");
+    console.log(data[0].password);
+    console.log(req.body.password);
+    const checkPassword = bcrypt.compareSync(
+      req.body.password,
+      data[0].password
+    );
+    if (!checkPassword)
+      return res.status(400).json("Wrong username or password");
+    const token = jwt.sign({ id: data[0].id }, "secretkey");
+    const { password, ...others } = data[0];
+    res
+      .cookie("accessToken", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(others);
+  });
+};
+
+export const loginTrainer = async (req, res) => {
+  //SELECT USER
+  const q = "SELECT * FROM users  WHERE `userType` = 'trainer' AND `email` = ?";
   const values = [req.body.email];
   db.query(q, [values], async (error, data) => {
     if (error) return res.status(500).json(error);

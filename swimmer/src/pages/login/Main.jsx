@@ -86,7 +86,7 @@ const Main = () => {
                         />
                       </div>
                       <div className="form-check form-switch">
-                        <a href="forgot-password">Forgot Password</a>
+                        <a href="forgot-password">Reset Password</a>
                       </div>
                       <div className="text-center">
                         <button
