@@ -8,7 +8,7 @@ import {
   QueryClientProvider,
 } from "react-query";
 import { useQuery } from "react-query";
-import DailyEventTR from "../../components/daily-calendar/DailyEventTR";
+import DailyEventTR from "./DailyEventTR";
 
 const AllEvents = () => {
   const [dtAll, setDtAll] = useState([]);

@@ -17,6 +17,14 @@ const DailyCalenar = () => {
   const [endTime, setEndTime] = useState("");
   const [ageGroup, setAgeGroup] = useState("");
 
+  const [trainers, setTrainers] = useState([]);
+  const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
+    makeRequest.get("/users/getTrainers").then((res) => {
+      setTrainers(res.data);
+      return res.data;
+    })
+  );
+
   const { data: events = {}, isLoading } = useQuery("Myevents", async () => {
     const { data } = await makeRequest.get("/events/getEvents");
     console.log(data);
@@ -50,8 +58,15 @@ const DailyCalenar = () => {
   };
 
   const handleFormSubmit = async (values) => {
-    const { title, description, timeFrame, startTime, endTime, ageGroup } =
-      values;
+    const {
+      title,
+      description,
+      timeFrame,
+      startTime,
+      endTime,
+      ageGroup,
+      trainer,
+    } = values;
     const dateKey = selectedDate.format("YYYY-MM-DD");
     const start = startTime.format("HH:mm:ss");
     const end = endTime.format("HH:mm:ss");
@@ -63,6 +78,7 @@ const DailyCalenar = () => {
       start,
       end,
       ageGroup,
+      trainer,
     };
     console.log(eventData);
 
@@ -168,6 +184,29 @@ const DailyCalenar = () => {
             rules={[{ required: true, message: "Please enter an end time" }]}
           >
             <TimePicker format="HH:mm:ss" />
+          </Form.Item>
+          <Form.Item
+            label="Select Trainer"
+            name="trainer"
+            rules={[
+              {
+                required: true,
+                message: "Please select a Trainer for this class",
+              },
+            ]}
+          >
+            <Select>
+              <Select.Option value="">--Select Trainer --</Select.Option>
+              {acerror
+                ? "Something Went Wring"
+                : acisLoading
+                ? "Loading"
+                : trainers.map((dt) => (
+                    <Select.Option value={dt.username} key={dt.id}>
+                      {dt.id} / {dt.username}
+                    </Select.Option>
+                  ))}
+            </Select>
           </Form.Item>
           <Form.Item
             label="Description"
