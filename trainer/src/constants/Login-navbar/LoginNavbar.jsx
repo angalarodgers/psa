@@ -47,35 +47,11 @@ const LoginNavbar = () => {
                       Profile
                     </a>
                   </li> */}
-                  <li className="nav-item">
-                    <a className="nav-link me-2" href="/register">
-                      <i className="fas fa-user-circle opacity-6 text-dark me-1" />
-                      Sign Up
-                    </a>
-                  </li>
+
                   <li className="nav-item">
                     <a className="nav-link me-2" href="/">
                       <i className="fas fa-key opacity-6 text-dark me-1" />
                       Sign In
-                    </a>
-                  </li>
-                </ul>
-                <li className="nav-item d-flex align-items-center">
-                  <a
-                    className="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
-                    target="_blank"
-                    href="#"
-                  >
-                    Swimmers Account
-                  </a>
-                </li>
-                <ul className="navbar-nav d-lg-block d-none">
-                  <li className="nav-item">
-                    <a
-                      href="#"
-                      className="btn btn-round btn-sm mb-0 btn-outline-primary me-2"
-                    >
-                      Weekly Schedules
                     </a>
                   </li>
                 </ul>

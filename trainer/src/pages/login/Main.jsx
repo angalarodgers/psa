@@ -51,7 +51,7 @@ const Main = () => {
                 <div className="card card-plain mt-8">
                   <div className="card-header pb-0 text-left bg-transparent">
                     <h3 className="font-weight-bolder text-info text-gradient">
-                      Admin | Welcome
+                      Trainer | Welcome
                     </h3>
                     <p className="mb-0">
                       Enter your email and password to sign in
@@ -98,17 +98,6 @@ const Main = () => {
                         </button>
                       </div>
                     </form>
-                  </div>
-                  <div className="card-footer text-center pt-0 px-lg-2 px-1">
-                    <p className="mb-4 text-sm mx-auto">
-                      Don't have an account?{" "}
-                      <a
-                        href="register"
-                        className="text-info text-gradient font-weight-bold"
-                      >
-                        Sign up
-                      </a>
-                    </p>
                   </div>
                 </div>
               </div>

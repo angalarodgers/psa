@@ -144,24 +144,6 @@ const Navbar = () => {
                 <li className="mb-2">
                   <a
                     className="dropdown-item border-radius-md"
-                    href="/payments"
-                  >
-                    <div className="d-flex py-1">
-                      <div className="d-flex flex-column justify-content-center">
-                        <h6 className="text-sm font-weight-normal mb-1">
-                          <span className="font-weight-bold">
-                            {" "}
-                            <i className="fa fa-money"></i> &nbsp; Payments
-                          </span>
-                        </h6>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-
-                <li className="mb-2">
-                  <a
-                    className="dropdown-item border-radius-md"
                     href="/swimmers"
                   >
                     <div className="d-flex py-1">
@@ -170,45 +152,6 @@ const Navbar = () => {
                           <span className="font-weight-bold">
                             {" "}
                             <i className="fa fa-users"></i> &nbsp; Clients
-                          </span>
-                        </h6>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-
-                <li className="mb-2">
-                  <a
-                    className="dropdown-item border-radius-md"
-                    href="/trainers"
-                  >
-                    <div className="d-flex py-1">
-                      <div className="d-flex flex-column justify-content-center">
-                        <h6 className="text-sm font-weight-normal mb-1">
-                          <span className="font-weight-bold">
-                            {" "}
-                            <i className="fa fa-user-circle-o"></i> &nbsp;
-                            Trainers
-                          </span>
-                        </h6>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-
-                <li className="mb-2">
-                  <a
-                    className="dropdown-item border-radius-md"
-                    href="https://client.proswimacademykenya.info/"
-                    target="_blank"
-                  >
-                    <div className="d-flex py-1">
-                      <div className="d-flex flex-column justify-content-center">
-                        <h6 className="text-sm font-weight-normal mb-1">
-                          <span className="font-weight-bold">
-                            {" "}
-                            <i className="fa fa-sign-in"></i> &nbsp; Login As
-                            Client
                           </span>
                         </h6>
                       </div>

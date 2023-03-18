@@ -45,7 +45,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="row">
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <a href="#">
             <div className="card">
               <div className="card-body p-3">
@@ -76,38 +76,8 @@ const Dashboard = () => {
             </div>
           </a>
         </div>
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <a href="#">
-            <div className="card">
-              <div className="card-body p-3">
-                <div className="row">
-                  <div className="col-8">
-                    <div className="numbers">
-                      <p className="text-sm mb-0 text-capitalize font-weight-bold">
-                        Payments
-                      </p>
-                      <h5 className="font-weight-bolder mb-0">
-                        ${totalAmount}
-                        <span className="text-success text-sm font-weight-bolder">
-                          .
-                        </span>
-                      </h5>
-                    </div>
-                  </div>
-                  <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                      <i
-                        className="ni ni-money-coins text-lg opacity-10"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+
+        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <a href="#">
             <div className="card">
               <div className="card-body p-3">
@@ -138,7 +108,7 @@ const Dashboard = () => {
             </div>
           </a>
         </div>
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
           <a href="#">
             <div className="card">
               <div className="card-body p-3">
