@@ -6,7 +6,11 @@ import {
   useSearchParams,
   createSearchParams,
 } from "react-router-dom";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import toast, { Toaster } from "react-hot-toast";
 import EventPercentage from "../../components/daily-calendar/EventPercentage";
+import "./stl.css";
+import { makeRequest } from "../../axios";
 
 const DailyEventTR = ({ event }) => {
   const [percentage, setPercentage] = useState(0);
@@ -47,6 +51,50 @@ const DailyEventTR = ({ event }) => {
       });
     } catch (error) {}
   };
+
+  function confirmAlert(options) {
+    const { title, message, buttons } = options;
+    const confirmed = window.confirm(`${title}\n\n${message}`);
+    if (confirmed && buttons && buttons[0] && buttons[0].onClick) {
+      buttons[0].onClick();
+    } else if (buttons && buttons[1] && buttons[1].onClick) {
+      buttons[1].onClick();
+    }
+  }
+
+  const handleDelete = (e, eventId) => {
+    console.log(eventId);
+    confirmAlert({
+      title: "Confirm Deletion",
+      message: "Are you sure you want to delete this event?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            makeRequest
+              .delete(`/events/deleteEvent/${eventId}`)
+              .then(() => {
+                toast.success("Event deleted successfully.", {
+                  appearance: "success",
+                  autoDismiss: true,
+                });
+                window.location.reload();
+              })
+              .catch((error) => {
+                toast.error("Failed to delete event. Please try again later.", {
+                  appearance: "error",
+                  autoDismiss: true,
+                });
+                console.error(error);
+              });
+          },
+        },
+        {
+          label: "No",
+        },
+      ],
+    });
+  };
   return (
     <>
       <tr>
@@ -67,9 +115,7 @@ const DailyEventTR = ({ event }) => {
           </div>
         </td>
         <td className="align-middle text-center text-sm">
-          <div className="avatar-group mt-2">
-            <span>{event.trainer}</span>
-          </div>
+          <div className="avatar-group mt-2">{event.trainer}</div>
         </td>
         <td>
           <span>{event.noStudents}</span>
@@ -80,15 +126,25 @@ const DailyEventTR = ({ event }) => {
             {event.date} / {event.startTime}{" "}
           </span>
         </td>
+
         <td>
           <button
             type="button"
-            className="btn btn-default"
+            className="btn btn-default mx-2"
             onClick={(e) => assignStudent(e, event.id)}
           >
             Assign Students
           </button>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={(e) => handleDelete(e, event.id)}
+          >
+            Delete
+          </button>
         </td>
+
+        <Toaster />
       </tr>
     </>
   );
