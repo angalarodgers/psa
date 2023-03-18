@@ -43,7 +43,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="row">
-        <div className="col-xl-3 col-sm-6">
+        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <a href="#">
             <div className="card">
               <div className="card-body p-3">
