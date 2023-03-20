@@ -93,48 +93,7 @@ const DailyCalenar = () => {
         visible={visible}
         onCancel={closeModal}
         footer={null}
-      >
-        <Form onFinish={handleFormSubmit}>
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please enter a title" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[{ required: true, message: "Please enter a description" }]}
-          >
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item
-            label="Select time frame"
-            name="timeFrame"
-            rules={[{ required: true, message: "Please select a time frame" }]}
-          >
-            <Select>
-              {serror
-                ? "Something Went Wring"
-                : sisLoading
-                ? "Loading"
-                : sessions.map((dt) => (
-                    <Select.Option value={dt.s} key={dt.id}>
-                      {dt.session}, Start: {dt.startsAt}, End: {dt.endsAt}
-                    </Select.Option>
-                  ))}
-
-              <Select.Option value="13">Day</Select.Option>
-              <Select.Option value="14">Week</Select.Option>
-              <Select.Option value="15">Month</Select.Option>
-            </Select>
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Add Event
-          </Button>
-        </Form>
-      </Modal>
+      ></Modal>
       <Toaster />
     </>
   );

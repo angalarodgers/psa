@@ -64,7 +64,10 @@ const DailyEventTR = ({ event }) => {
                 />
               </div>
               <div className="d-flex flex-column justify-content-center">
-                <h6 className="mb-0 text-sm"> / {event.title}</h6>
+                <h6 className="mb-0 text-sm">
+                  {" "}
+                  {event.id} / {event.title}
+                </h6>
               </div>
             </div>
           </td>
@@ -123,7 +126,9 @@ const DailyEventTR = ({ event }) => {
               </div>
               <div className="d-flex flex-column justify-content-center">
                 <a href="#" onClick={(e) => viewMembers(e, event.id)}>
-                  <h6 className="mb-0 text-sm">{event.title}</h6>
+                  <h6 className="mb-0 text-sm">
+                    {event.id} / {event.title}
+                  </h6>
                 </a>
               </div>
             </div>

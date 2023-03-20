@@ -20,8 +20,8 @@ const AddPayBodyTab = () => {
             <input
               type="number"
               className="form-control"
-              placeholder="Email"
-              aria-label="Email"
+              placeholder="Amount"
+              aria-label="Amount"
               aria-describedby="email-addon"
             />
           </div>
@@ -43,8 +43,8 @@ const AddPayBodyTab = () => {
             <input
               type="date"
               className="form-control"
-              placeholder="Password"
-              aria-label="Password"
+              placeholder="date"
+              aria-label="date"
               aria-describedby="password-addon"
             />
           </div>
