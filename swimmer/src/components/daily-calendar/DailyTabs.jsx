@@ -51,7 +51,7 @@ const DailyTabs = () => {
                 aria-controls="pills-dcontact"
                 aria-selected="false"
               >
-                Today Diary
+                Today's Diary
               </button>
             </li>
           </ul>
