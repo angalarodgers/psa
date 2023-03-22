@@ -63,7 +63,11 @@ const DailyCalenar = () => {
     const eventList = events[dateKey];
 
     if (!eventList) {
-      return null;
+      if (new Date(dateKey) >= new Date()) {
+        return <span>All Slots Available</span>;
+      } else {
+        return null;
+      }
     }
 
     return (
@@ -71,6 +75,22 @@ const DailyCalenar = () => {
         {eventList.map((event, index) => (
           <li key={index}>
             <strong>{event.title}</strong>: {event.description}
+            <p>
+              Start Time:{" "}
+              <small>
+                <strong>{event.startTime}</strong>
+              </small>
+              , End Time:{" "}
+              <small>
+                <strong>{event.endTime}</strong>
+              </small>
+            </p>
+            <p>
+              Slots Available:{" "}
+              <small>
+                <strong>{5 - event.noStudents}</strong>
+              </small>
+            </p>
           </li>
         ))}
       </ul>
@@ -93,7 +113,9 @@ const DailyCalenar = () => {
         visible={visible}
         onCancel={closeModal}
         footer={null}
-      ></Modal>
+      >
+        {selectedDate && renderEventList(selectedDate)}
+      </Modal>
       <Toaster />
     </>
   );

@@ -11,7 +11,7 @@ const AddEventTabs = () => {
     title: "class",
     description: "",
     date: null,
-    timeFrame: "",
+    timeFrame: 1,
     startTime: "",
     endTime: "",
     ageGroup: "",
@@ -109,8 +109,8 @@ const AddEventTabs = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="exampleFormControlSelect1">Select Time</label>
+          <div className="form-group" style={{ display: "none" }}>
+            <label htmlFor="exampleFormControlSelect1">Select Session</label>
             <select
               className="form-control"
               id="exampleFormControlSelect1"

@@ -273,8 +273,9 @@ const RegMain = () => {
                       >
                         I agree the{" "}
                         <a
-                          href="javascript:;"
+                          href="/psak-terms-of-service"
                           className="text-dark font-weight-bolder"
+                          target="_blank"
                         >
                           Terms and Conditions
                         </a>

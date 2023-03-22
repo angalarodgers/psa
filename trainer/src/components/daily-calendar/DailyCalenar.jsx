@@ -1,29 +1,17 @@
 import React, { useState } from "react";
-import { Calendar, Modal, Form, Input, Button, Select, TimePicker } from "antd";
+import { Calendar, Modal, Form, Input, Button, Select } from "antd";
 
 import moment from "moment";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { makeRequest } from "../../axios";
 import toast, { Toaster } from "react-hot-toast";
-
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const DailyCalenar = () => {
   const [visible, setVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [sessions, setSessions] = useState([]);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [ageGroup, setAgeGroup] = useState("");
-
-  const [trainers, setTrainers] = useState([]);
-  const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
-    makeRequest.get("/users/getTrainers").then((res) => {
-      setTrainers(res.data);
-      return res.data;
-    })
-  );
 
   const { data: events = {}, isLoading } = useQuery("Myevents", async () => {
     const { data } = await makeRequest.get("/events/getEvents");
@@ -52,38 +40,16 @@ const DailyCalenar = () => {
   const closeModal = () => {
     setVisible(false);
     setSelectedDate(null);
-    setStartTime("");
-    setEndTime("");
-    setAgeGroup("");
   };
 
   const handleFormSubmit = async (values) => {
-    const {
-      title,
-      description,
-      timeFrame,
-      startTime,
-      endTime,
-      ageGroup,
-      trainer,
-    } = values;
+    const { title, description, timeFrame } = values;
     const dateKey = selectedDate.format("YYYY-MM-DD");
-    const start = startTime.format("HH:mm:ss");
-    const end = endTime.format("HH:mm:ss");
-    const eventData = {
-      title,
-      description,
-      date: dateKey,
-      timeFrame,
-      start,
-      end,
-      ageGroup,
-      trainer,
-    };
+    const eventData = { title, description, date: dateKey, timeFrame };
     console.log(eventData);
 
     const res = await makeRequest
-      .post("/events/saveCalendarEvent", eventData)
+      .post("/events/addEvent", eventData)
       .then(async () => {
         toast.success("Registered Successfully!");
         await sleep(2000);
@@ -97,7 +63,11 @@ const DailyCalenar = () => {
     const eventList = events[dateKey];
 
     if (!eventList) {
-      return null;
+      if (new Date(dateKey) >= new Date()) {
+        return <span>All Slots Available</span>;
+      } else {
+        return null;
+      }
     }
 
     return (
@@ -105,6 +75,28 @@ const DailyCalenar = () => {
         {eventList.map((event, index) => (
           <li key={index}>
             <strong>{event.title}</strong>: {event.description}
+            <p>
+              Coach:{" "}
+              <small>
+                <strong>{event.trainer}</strong>
+              </small>
+            </p>
+            <p>
+              Start Time:{" "}
+              <small>
+                <strong>{event.startTime}</strong>
+              </small>
+              , End Time:{" "}
+              <small>
+                <strong>{event.endTime}</strong>
+              </small>
+            </p>
+            <p>
+              Spaces Available:{" "}
+              <small>
+                <strong>{5 - event.noStudents}</strong>
+              </small>
+            </p>
           </li>
         ))}
       </ul>
@@ -128,97 +120,7 @@ const DailyCalenar = () => {
         onCancel={closeModal}
         footer={null}
       >
-        <Form onFinish={handleFormSubmit}>
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please enter a title" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Select Age Group"
-            name="ageGroup"
-            rules={[{ required: true, message: "Please select an age group" }]}
-          >
-            <Select>
-              <Select.Option value="">-- Select Age Group --</Select.Option>
-              <Select.Option value="adult">Adult</Select.Option>
-              <Select.Option value="child">Child</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            label="Select time frame"
-            name="timeFrame"
-            rules={[{ required: true, message: "Please select a Session" }]}
-          >
-            <Select>
-              <Select.Option value="">--Select Hour Session --</Select.Option>
-              {serror
-                ? "Something Went Wring"
-                : sisLoading
-                ? "Loading"
-                : sessions.map((dt) => (
-                    <Select.Option value={dt.s} key={dt.id}>
-                      {dt.t} {dt.session}
-                    </Select.Option>
-                  ))}
-
-              <Select.Option value="13">Day</Select.Option>
-              <Select.Option value="14">Week</Select.Option>
-              <Select.Option value="15">Month</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Start Time"
-            name="startTime"
-            rules={[{ required: true, message: "Please enter a start time" }]}
-          >
-            <TimePicker format="HH:mm:ss" />
-          </Form.Item>
-
-          <Form.Item
-            label="End Time"
-            name="endTime"
-            rules={[{ required: true, message: "Please enter an end time" }]}
-          >
-            <TimePicker format="HH:mm:ss" />
-          </Form.Item>
-          <Form.Item
-            label="Select Trainer"
-            name="trainer"
-            rules={[
-              {
-                required: true,
-                message: "Please select a Trainer for this class",
-              },
-            ]}
-          >
-            <Select>
-              <Select.Option value="">--Select Trainer --</Select.Option>
-              {acerror
-                ? "Something Went Wring"
-                : acisLoading
-                ? "Loading"
-                : trainers.map((dt) => (
-                    <Select.Option value={dt.username} key={dt.id}>
-                      {dt.id} / {dt.username}
-                    </Select.Option>
-                  ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[{ required: true, message: "Please enter a description" }]}
-          >
-            <Input.TextArea />
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Add Event
-          </Button>
-        </Form>
+        {selectedDate && renderEventList(selectedDate)}
       </Modal>
       <Toaster />
     </>

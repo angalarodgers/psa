@@ -74,7 +74,7 @@ const DailyCalenar = () => {
       title,
       description,
       date: dateKey,
-      timeFrame,
+      timeFrame: 1,
       start,
       end,
       ageGroup,
@@ -151,10 +151,11 @@ const DailyCalenar = () => {
           <Form.Item
             label="Select time frame"
             name="timeFrame"
-            rules={[{ required: true, message: "Please select a Session" }]}
+            style={{ display: "none" }}
+            rules={[{ required: false, message: "Please select a Session" }]}
           >
-            <Select>
-              <Select.Option value="">--Select Hour Session --</Select.Option>
+            <Select defaultValue="2">
+              <Select.Option value="2">Day Session</Select.Option>
               {serror
                 ? "Something Went Wring"
                 : sisLoading

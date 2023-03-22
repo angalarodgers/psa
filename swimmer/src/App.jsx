@@ -23,6 +23,7 @@ import Schedules from "./pages/schedules/Schedules";
 import Swimmers from "./pages/swimmers/Swimmers";
 import Payments from "./pages/payments/Payments";
 import Calendar from "./pages/calendar/Calendar";
+import TermsAndConditions from "./pages/register/TermsAndConditions";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -109,6 +110,10 @@ function App() {
     {
       path: "/reset-password",
       element: <ResetPassword />,
+    },
+    {
+      path: "/psak-terms-of-service",
+      element: <TermsAndConditions />,
     },
   ]);
 
