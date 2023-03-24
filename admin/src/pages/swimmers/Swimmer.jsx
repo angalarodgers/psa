@@ -59,7 +59,7 @@ const Swimmer = ({ swimmer }) => {
                 <small>Username:</small> <strong>{swimmer.username}</strong>
               </h6>
               <p className="text-sm mb-0">
-                <small>Swimmer Email</small>
+                <small>Swimmer</small>
 
                 <p className="mb-1 d-md-none d-block text-sm font-weight-bold text-darker">
                   {swimmer.username}

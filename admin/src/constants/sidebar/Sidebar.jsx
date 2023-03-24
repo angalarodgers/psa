@@ -45,7 +45,7 @@ const Sidebar = () => {
             className="navbar-brand-img h-100"
             alt="main_logo"
           />
-          <span className="ms-1 font-weight-bold">P.S.A</span>
+          <span className="ms-1 font-weight-bold">P.S.A.K</span>
         </a>
       </div>
       <hr className="horizontal dark mt-0" />

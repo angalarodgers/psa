@@ -59,13 +59,10 @@ const Swimmer = ({ swimmer }) => {
                 <small>Username:</small> <strong>{swimmer.username}</strong>
               </h6>
               <p className="text-sm mb-0">
-                <small>Swimmer Email</small>
+                <small>Swimmer</small>
 
                 <p className="mb-1 d-md-none d-block text-sm font-weight-bold text-darker">
                   {swimmer.username}
-                </p>
-                <p className="mb-0 text-xs  text-warning text-gradient  mb-4">
-                  <a href={`mailto:${swimmer.email}`}>{swimmer.email}</a>
                 </p>
 
                 <ViewUser swimmer={swimmer} key={swimmer.id} />

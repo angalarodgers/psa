@@ -80,15 +80,6 @@ const DailyEventTR = ({ event }) => {
             {event.date} / {event.startTime}{" "}
           </span>
         </td>
-        <td>
-          <button
-            type="button"
-            className="btn btn-default"
-            onClick={(e) => assignStudent(e, event.id)}
-          >
-            Assign Students
-          </button>
-        </td>
       </tr>
     </>
   );

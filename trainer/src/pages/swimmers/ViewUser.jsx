@@ -66,10 +66,7 @@ const ViewUser = ({ swimmer }) => {
                           &nbsp;
                           {swimmer.userType}
                         </li>
-                        <li className="list-group-item border-0 ps-0 text-sm">
-                          <strong className="text-dark">Email:</strong> &nbsp;
-                          {swimmer.email}
-                        </li>
+
                         <li className="list-group-item border-0 ps-0 text-sm">
                           <strong className="text-dark">Age Group:</strong>{" "}
                           &nbsp; {swimmer.userAge}

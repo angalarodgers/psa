@@ -176,7 +176,7 @@ const DailyCalenar = () => {
             name="startTime"
             rules={[{ required: true, message: "Please enter a start time" }]}
           >
-            <TimePicker format="HH:mm:ss" />
+            <TimePicker format="HH:mm:ss A" />
           </Form.Item>
 
           <Form.Item
@@ -184,7 +184,7 @@ const DailyCalenar = () => {
             name="endTime"
             rules={[{ required: true, message: "Please enter an end time" }]}
           >
-            <TimePicker format="HH:mm:ss" />
+            <TimePicker format="HH:mm:ss A" />
           </Form.Item>
           <Form.Item
             label="Select Trainer"

@@ -11,17 +11,6 @@ const Daily = () => {
             <div className="col-6 d-flex align-items-center">
               <h6 className="mb-0">Daily Classes</h6>
             </div>
-            <div className="col-6 text-end">
-              <a
-                type="button"
-                className="btn bg-gradient-success btn-block mb-3"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModalMessage"
-              >
-                <i className="fas fa-plus" />
-                &nbsp;&nbsp;Add New Event
-              </a>
-            </div>
           </div>
         </div>
         <div className="card-body p-3">

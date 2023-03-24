@@ -76,6 +76,12 @@ const DailyCalenar = () => {
           <li key={index}>
             <strong>{event.title}</strong>: {event.description}
             <p>
+              Coach:{" "}
+              <small>
+                <strong>{event.trainer}</strong>
+              </small>
+            </p>
+            <p>
               Start Time:{" "}
               <small>
                 <strong>{event.startTime}</strong>

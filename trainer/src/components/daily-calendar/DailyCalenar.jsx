@@ -94,7 +94,7 @@ const DailyCalenar = () => {
             <p>
               Spaces Available:{" "}
               <small>
-                <strong>{5 - event.noStudents}</strong>
+                <strong>{6 - event.noStudents}</strong>
               </small>
             </p>
           </li>

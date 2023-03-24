@@ -160,15 +160,6 @@ const DailyEventTR = ({ event }) => {
               </div>
             </div>
           </td>
-          <td>
-            <button
-              type="button"
-              className="btn btn-default"
-              onClick={(e) => assignStudent(e, event.id)}
-            >
-              Assign Students
-            </button>
-          </td>
         </tr>
       )}
     </>
