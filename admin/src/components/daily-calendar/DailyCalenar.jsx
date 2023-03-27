@@ -16,6 +16,9 @@ const DailyCalenar = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [ageGroup, setAgeGroup] = useState("");
+  const [count_left, setCountLeft] = useState(null);
+  const [countEvents, setCountEvents] = useState([]);
+  const [selectedStartTime, setSelectedStartTime] = useState("00:00:00");
 
   const [trainers, setTrainers] = useState([]);
   const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
@@ -25,10 +28,27 @@ const DailyCalenar = () => {
     })
   );
 
+  const { cisLoading, error, data } = useQuery(`ordersAll`, () =>
+    makeRequest.get("/events/getEvents").then((res) => {
+      setCountEvents(res.data);
+      return res.data;
+    })
+  );
+
+  const handleChange = (time, timeString) => {
+    const start = time.format("HH:mm:ss");
+    const dateKey = selectedDate.format("YYYY-MM-DD");
+    setSelectedStartTime(start);
+    const filteredEvents = countEvents.filter((event) => {
+      return event.startTime === start && event.date === dateKey;
+    });
+
+    setCountLeft(filteredEvents.length);
+  };
+
   const { data: events = {}, isLoading } = useQuery("Myevents", async () => {
     const { data } = await makeRequest.get("/events/getEvents");
-    console.log(data);
-    // Transform the array of events into an object that maps each event to its corresponding date key
+
     return data.reduce((acc, event) => {
       const dateKey = moment(event.date).format("YYYY-MM-DD");
       acc[dateKey] = acc[dateKey] || [];
@@ -45,6 +65,9 @@ const DailyCalenar = () => {
   );
 
   const onDateSelect = (date) => {
+    const defaultStartTime = moment("07:00:00", "HH:mm:ss");
+    setCountLeft(0);
+    setSelectedStartTime("00:00:00");
     setSelectedDate(date);
     setVisible(true);
   };
@@ -176,7 +199,13 @@ const DailyCalenar = () => {
             name="startTime"
             rules={[{ required: true, message: "Please enter a start time" }]}
           >
-            <TimePicker format="HH:mm:ss A" />
+            <TimePicker format="HH:mm:ss A" onChange={handleChange} />
+          </Form.Item>
+          <Form.Item>
+            <span>
+              Remaining slots at <strong>{selectedStartTime} is </strong>:{" "}
+              <strong>{6 - count_left}</strong>
+            </span>
           </Form.Item>
 
           <Form.Item

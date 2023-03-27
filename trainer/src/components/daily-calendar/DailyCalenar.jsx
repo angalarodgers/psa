@@ -74,7 +74,8 @@ const DailyCalenar = () => {
       <ul>
         {eventList.map((event, index) => (
           <li key={index}>
-            <strong>{event.title}</strong>: {event.description}
+            <strong>{event.title}</strong>: {event.ageGroup} <br />
+            <span>Description: {event.description}</span>
             <p>
               Coach:{" "}
               <small>
