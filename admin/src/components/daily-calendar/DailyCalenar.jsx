@@ -19,6 +19,7 @@ const DailyCalenar = () => {
   const [count_left, setCountLeft] = useState(null);
   const [countEvents, setCountEvents] = useState([]);
   const [selectedStartTime, setSelectedStartTime] = useState("00:00:00");
+  const [desc, setDesc] = useState("");
 
   const [trainers, setTrainers] = useState([]);
   const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
@@ -44,6 +45,10 @@ const DailyCalenar = () => {
     });
 
     setCountLeft(filteredEvents.length);
+  };
+
+  const AddAgeGroup = (value) => {
+    setDesc(value);
   };
 
   const { data: events = {}, isLoading } = useQuery("Myevents", async () => {
@@ -127,7 +132,12 @@ const DailyCalenar = () => {
       <ul>
         {eventList.map((event, index) => (
           <li key={index}>
-            <strong>{event.title}</strong>: {event.description}
+            <strong>{event.title}</strong>: {event.ageGroup}
+            <p>
+              Description: <small>{event.description}</small> <br />
+              Starts At : <strong>{event.startTime}</strong>, Ends At :{" "}
+              <strong>{event.endTime}</strong>
+            </p>
           </li>
         ))}
       </ul>
@@ -164,7 +174,7 @@ const DailyCalenar = () => {
             name="ageGroup"
             rules={[{ required: true, message: "Please select an age group" }]}
           >
-            <Select>
+            <Select onChange={(value) => AddAgeGroup(value)}>
               <Select.Option value="">-- Select Age Group --</Select.Option>
               <Select.Option value="adult">Adult</Select.Option>
               <Select.Option value="child">Child</Select.Option>
@@ -239,11 +249,13 @@ const DailyCalenar = () => {
             </Select>
           </Form.Item>
           <Form.Item
-            label="Description"
+            label={`Description->${desc}`}
             name="description"
-            rules={[{ required: true, message: "Please enter a description" }]}
+            rules={[{ required: false, message: "Please enter a description" }]}
           >
-            <Input.TextArea />
+            <Input.TextArea value={desc} defaultValue={desc}>
+              {desc}
+            </Input.TextArea>
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Add Event
