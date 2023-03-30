@@ -3,8 +3,16 @@ import { makeRequest } from "../../axios";
 import ViewUser from "./ViewUser";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import toast, { Toaster } from "react-hot-toast";
+import {
+  Link,
+  Navigate,
+  useNavigate,
+  useSearchParams,
+  createSearchParams,
+} from "react-router-dom";
 
 const Swimmer = ({ swimmer }) => {
+  const navigate = useNavigate();
   function confirmAlert(options) {
     const { title, message, buttons } = options;
     const confirmed = window.confirm(`${title}\n\n${message}`);
@@ -46,6 +54,15 @@ const Swimmer = ({ swimmer }) => {
           label: "No",
         },
       ],
+    });
+  };
+
+  const edit = (e, swimmerId) => {
+    navigate({
+      pathname: "/edit-swimmer",
+      search: createSearchParams({
+        swimmerId: swimmerId,
+      }).toString(),
     });
   };
   return (
@@ -98,7 +115,7 @@ const Swimmer = ({ swimmer }) => {
                   <li>
                     <a
                       className="dropdown-item border-radius-md"
-                      href="Edit Details"
+                      onClick={(e) => edit(e, swimmer.id)}
                     >
                       Edit
                     </a>

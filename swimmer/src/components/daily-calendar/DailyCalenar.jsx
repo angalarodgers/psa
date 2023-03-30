@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Calendar, Modal, Form, Input, Button, Select } from "antd";
 
 import moment from "moment";
@@ -6,9 +6,11 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { makeRequest } from "../../axios";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../../context/authContext";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const DailyCalenar = () => {
+  const { currentUser } = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [sessions, setSessions] = useState([]);
@@ -64,7 +66,29 @@ const DailyCalenar = () => {
 
     if (!eventList) {
       if (new Date(dateKey) >= new Date()) {
-        return <span>All Slots Available</span>;
+        return (
+          <span>
+            {" "}
+            <i className="fa fa-check" style={{ color: "green" }}></i>{" "}
+          </span>
+        );
+      } else {
+        return null;
+      }
+    }
+
+    const filteredEvents = eventList.filter(
+      (event) => event.title === currentUser.username
+    );
+
+    if (filteredEvents.length === 0) {
+      if (new Date(dateKey) >= new Date()) {
+        return (
+          <span>
+            {" "}
+            <i className="fa fa-warning" style={{ color: "red" }}></i>
+          </span>
+        );
       } else {
         return null;
       }
@@ -72,16 +96,10 @@ const DailyCalenar = () => {
 
     return (
       <ul>
-        {eventList.map((event, index) => (
+        {filteredEvents.map((event, index) => (
           <li key={index}>
             <strong>{event.title}</strong>: {event.ageGroup} <br />
             <span>Description: {event.description}</span>
-            <p>
-              Coach:{" "}
-              <small>
-                <strong>{event.trainer}</strong>
-              </small>
-            </p>
             <p>
               Start Time:{" "}
               <small>
@@ -93,7 +111,7 @@ const DailyCalenar = () => {
               </small>
             </p>
             <p>
-              Slots Available:{" "}
+              Spaces Available:{" "}
               <small>
                 <strong>{5 - event.noStudents}</strong>
               </small>

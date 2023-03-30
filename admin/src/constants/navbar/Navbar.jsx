@@ -111,6 +111,24 @@ const Navbar = () => {
                 <li className="mb-2">
                   <a
                     className="dropdown-item border-radius-md"
+                    href="/messages"
+                  >
+                    <div className="d-flex py-1">
+                      <div className="d-flex flex-column justify-content-center">
+                        <h6 className="text-sm font-weight-normal mb-1">
+                          <span className="font-weight-bold">
+                            {" "}
+                            <i className="fa fa-envelope"></i> &nbsp; Messages
+                          </span>
+                        </h6>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+
+                <li className="mb-2">
+                  <a
+                    className="dropdown-item border-radius-md"
                     href="/schedules"
                   >
                     <div className="d-flex py-1">

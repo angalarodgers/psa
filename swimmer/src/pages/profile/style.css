@@ -1,0 +1,23 @@
+/* Style the file input and hide it */
+input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Style the Choose file button */
+#image-upload-button {
+  position: relative;
+  z-index: 1;
+}
+
+/* Style the help text */
+#image-upload-help {
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #6c757d;
+}

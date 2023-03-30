@@ -18,11 +18,11 @@ const Swimmers = () => {
     <div className="row">
       <div className="col-sm-12 text-left">
         <div className="row">
-          <div className="col-sm-8">
+          <div className="col-sm-6">
             <h5>Swimmers</h5>
           </div>
 
-          <div className="col-sm-4">
+          <div className="col-sm-6">
             <a
               href="/classes"
               className="btn btn-icon btn-3 btn-primary text-right m-2 mr-auto"
@@ -44,6 +44,17 @@ const Swimmers = () => {
               </span>
               <span className="btn-inner--text">Add Swimmer</span>
             </button>
+            <a href="/edit-swimmer">
+              <button
+                className="btn btn-icon btn-3 btn-primary text-right m-2 mr-auto"
+                type="button"
+              >
+                <span className="btn-inner--icon">
+                  <i className="ni ni-button-plus" />
+                </span>
+                <span className="btn-inner--text">Edit Swimmers</span>
+              </button>
+            </a>
             <AddUsers />
           </div>
         </div>

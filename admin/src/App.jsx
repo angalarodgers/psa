@@ -28,6 +28,8 @@ import EventMembers from "./pages/event-members/EventMembers";
 import { AuthContext } from "./context/authContext";
 import UserProfile from "./pages/profile/UserProfile";
 import Classes from "./pages/classes/Classes";
+import Messages from "./pages/messages/Messages";
+import Edit from "./pages/swimmers/Edit";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -110,6 +112,14 @@ function App() {
         {
           path: "/classes",
           element: <Classes />,
+        },
+        {
+          path: "/messages",
+          element: <Messages />,
+        },
+        {
+          path: "/edit-swimmer",
+          element: <Edit />,
         },
       ],
     },

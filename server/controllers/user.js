@@ -6,6 +6,21 @@ import Mailgen from "mailgen";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+export const uploadFile = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not Logged In");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+    const q = "UPDATE users SET `img` = ? WHERE `id` = ?";
+    const values = [req.body.file];
+    db.query(q, [values, userInfo.id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("File Has Been Uploaded!");
+    });
+  });
+};
+
 export const getCustomers = (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not Logged In");
@@ -263,6 +278,30 @@ export const deleteUser = (req, res) => {
       if (err) return res.status(500).json(err);
 
       return res.status(200).json(result.affectedRows + " user deleted");
+    });
+  });
+};
+
+export const editUser = (req, res) => {
+  const { id, ...updatedFields } = req.body;
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not Logged In");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid");
+
+    const fieldNames = Object.keys(updatedFields);
+    const placeholders = fieldNames
+      .map((fieldName) => `${fieldName} = ?`)
+      .join(", ");
+    const values = Object.values(updatedFields);
+    values.push(id);
+
+    const q = `UPDATE users SET ${placeholders} WHERE id = ?`;
+    db.query(q, values, (err, data) => {
+      if (err) return res.status(500).json(err);
+
+      return res.status(200).json(data);
     });
   });
 };

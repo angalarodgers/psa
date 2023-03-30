@@ -20,11 +20,18 @@ const DailyCalenar = () => {
   const [countEvents, setCountEvents] = useState([]);
   const [selectedStartTime, setSelectedStartTime] = useState("00:00:00");
   const [desc, setDesc] = useState("");
-
+  const [newUsers, setNewUsers] = useState([]);
   const [trainers, setTrainers] = useState([]);
   const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
     makeRequest.get("/users/getTrainers").then((res) => {
       setTrainers(res.data);
+      return res.data;
+    })
+  );
+
+  const { userisLoading, usererror, userdata } = useQuery("GetAllUsers", () =>
+    makeRequest.get("/users/getCustomers").then((res) => {
+      setNewUsers(res.data);
       return res.data;
     })
   );
@@ -163,11 +170,27 @@ const DailyCalenar = () => {
       >
         <Form onFinish={handleFormSubmit}>
           <Form.Item
-            label="Title"
+            label="Swimmer"
             name="title"
-            rules={[{ required: true, message: "Please enter a title" }]}
+            rules={[
+              {
+                required: true,
+                message: "Please Swimmer who will attend this class",
+              },
+            ]}
           >
-            <Input />
+            <Select>
+              <Select.Option value="">--Select Swimmer --</Select.Option>
+              {usererror
+                ? "Something Went Wring"
+                : userisLoading
+                ? "Loading"
+                : newUsers.map((dt) => (
+                    <Select.Option value={dt.username} key={dt.id}>
+                      {dt.id} / {dt.username}
+                    </Select.Option>
+                  ))}
+            </Select>
           </Form.Item>
           <Form.Item
             label="Select Age Group"

@@ -24,6 +24,9 @@ import Swimmers from "./pages/swimmers/Swimmers";
 import Payments from "./pages/payments/Payments";
 import Calendar from "./pages/calendar/Calendar";
 import TermsAndConditions from "./pages/register/TermsAndConditions";
+import UserProfile from "./pages/profile/UserProfile";
+import EditProfile from "./pages/profile/EditProfile";
+import Messages from "./pages/messages/Messages";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -92,6 +95,18 @@ function App() {
         {
           path: "/calendar",
           element: <Calendar />,
+        },
+        {
+          path: "/profile",
+          element: <UserProfile />,
+        },
+        {
+          path: "/edit-profile",
+          element: <EditProfile />,
+        },
+        {
+          path: "/messages",
+          element: <Messages />,
         },
       ],
     },
