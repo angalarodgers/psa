@@ -20,8 +20,11 @@ const AllEvents = () => {
   );
 
   const myfilteredData = dtAll
-    .filter((obj) => obj.date !== undefined) // remove objects with undefined id
-    .sort((a, b) => a.date - b.date); // sort objects by id in ascending order
+    .filter(
+      (obj) => obj.date !== undefined && obj.date.match(/^\d{4}-\d{2}-\d{2}$/)
+    ) // remove objects with undefined or invalid date format
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // sort objects by date in ascending order
+
   return (
     <div className="card">
       <div className="card-body px-0">

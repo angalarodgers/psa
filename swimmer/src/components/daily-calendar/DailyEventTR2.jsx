@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import EventPercentage from "./EventPercentage";
-import GetTime from "./GetTime";
-import TimeDifferencePercentage from "./TimeDifferencePercentage";
+import React from "react";
 
-const DailyEventTR = ({ event }) => {
-  const [percentage, setPercentage] = useState(0);
-
+const DailyEventTR2 = ({ event }) => {
   return (
     <>
-      {event.passed == 0 && (
+      {event.passed == 1 && (
         <tr>
           <td>
             <div className="d-flex px-2 py-1">
@@ -34,7 +29,7 @@ const DailyEventTR = ({ event }) => {
             </span>
           </td>
           <td>
-            <span>Coming soon...</span>
+            <span style={{ color: "darkyellow" }}>Class has ended</span>
           </td>
         </tr>
       )}
@@ -42,4 +37,4 @@ const DailyEventTR = ({ event }) => {
   );
 };
 
-export default DailyEventTR;
+export default DailyEventTR2;

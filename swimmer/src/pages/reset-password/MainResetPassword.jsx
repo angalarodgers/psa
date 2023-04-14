@@ -74,6 +74,7 @@ const MainResetPassword = () => {
                           name="password"
                           onChange={handleChange}
                           value={inputs.password}
+                          autocomplete="off"
                         />
                       </div>
                       <label>Confirm Password</label>
@@ -87,6 +88,7 @@ const MainResetPassword = () => {
                           name="password1"
                           onChange={handleChange}
                           value={inputs.password1}
+                          autocomplete="off"
                         />
                       </div>
 

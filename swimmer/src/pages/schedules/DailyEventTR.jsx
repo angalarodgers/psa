@@ -27,11 +27,13 @@ const DailyEventTR = ({ event }) => {
           </div>
         </div>
       </td>
-      <td>{event.noStudents}</td>
+      <td>
+        <span>{event.student_name}</span>
+      </td>
       <td className="align-middle text-center text-sm">
         <span className="text-xs font-weight-bold">
           {" "}
-          {event.date} / {event.time}{" "}
+          {event.date} / {event.startTime} to {event.endTime}
         </span>
       </td>
     </tr>

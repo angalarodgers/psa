@@ -15,8 +15,7 @@ const Daily = () => {
               <a
                 type="button"
                 className="btn bg-gradient-success btn-block mb-3"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModalMessage"
+                href="/add-class"
               >
                 <i className="fas fa-plus" />
                 &nbsp;&nbsp;Add New Event

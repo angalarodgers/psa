@@ -65,76 +65,175 @@ const Swimmer = ({ swimmer }) => {
       }).toString(),
     });
   };
+
+  const addMembers = (e, swimmerId) => {
+    navigate({
+      pathname: "/add-members",
+      search: createSearchParams({
+        swimmerId: swimmerId,
+      }).toString(),
+    });
+  };
   return (
     <div className="col-md-4 mb-2">
-      <div className="card card-profile card-plain">
-        <div className="card-header pb-0">
-          <div className="row">
-            <div className="col-lg-10 col-7">
-              <h6>
-                {" "}
-                <small>Username:</small> <strong>{swimmer.username}</strong>
-              </h6>
-              <p className="text-sm mb-0">
-                <small>Swimmer</small>
+      {swimmer.registeredAs == "individual" ||
+      swimmer.registered == "member" ? (
+        <div className="card card-profile card-plain">
+          <div className="card-header pb-0">
+            <div className="row">
+              <div className="col-lg-10 col-7">
+                <h6>
+                  {" "}
+                  <small>Username:</small> <strong>{swimmer.username}</strong>
+                </h6>
+                <p className="text-sm mb-0">
+                  <small>Swimmer Email</small>
 
-                <p className="mb-1 d-md-none d-block text-sm font-weight-bold text-darker">
-                  {swimmer.username}
-                </p>
-                <p className="mb-0 text-xs  text-warning text-gradient  mb-4">
-                  <a href={`mailto:${swimmer.email}`}>{swimmer.email}</a>
-                </p>
+                  <p className="mb-1 d-md-none d-block text-sm font-weight-bold text-darker">
+                    {swimmer.username}
+                  </p>
+                  <p className="mb-0 text-xs  text-warning text-gradient  mb-4">
+                    <a href={`mailto:${swimmer.email}`}>{swimmer.email}</a>
+                  </p>
 
-                <ViewUser swimmer={swimmer} key={swimmer.id} />
-              </p>
-            </div>
-            <div className="col-lg-2 col-5 my-auto text-end">
-              <div className="dropdown float-lg-end pe-4">
-                <a
-                  className="cursor-pointer"
-                  id="dropdownTable"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i className="fa fa-ellipsis-v text-secondary" />
-                </a>
-                <ul
-                  className="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5"
-                  aria-labelledby="dropdownTable"
-                >
-                  <li>
-                    <a
-                      className="dropdown-item border-radius-md"
-                      href="#"
-                      data-bs-toggle="modal"
-                      data-bs-target={`#modal-default${swimmer.id}`}
-                    >
-                      View More Details
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="dropdown-item border-radius-md"
-                      onClick={(e) => edit(e, swimmer.id)}
-                    >
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="dropdown-item border-radius-md"
-                      href="#"
-                      onClick={(e) => handleDelete(e, swimmer.id)}
-                    >
-                      <span style={{ color: "red" }}>Delete</span>
-                    </a>
-                  </li>
-                </ul>
+                  <ViewUser swimmer={swimmer} key={swimmer.id} />
+                </p>
+                <p>Individual {swimmer.userType}</p>
+              </div>
+              <div className="col-lg-2 col-5  text-end">
+                <div className="dropdown float-lg-end pe-4">
+                  <a
+                    className="cursor-pointer"
+                    id="dropdownTable"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i className="fa fa-ellipsis-v text-secondary" />
+                  </a>
+                  <ul
+                    className="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5"
+                    aria-labelledby="dropdownTable"
+                  >
+                    <li>
+                      <a
+                        className="dropdown-item border-radius-md"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#modal-default${swimmer.id}`}
+                      >
+                        View More Details
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item border-radius-md"
+                        onClick={(e) => edit(e, swimmer.id)}
+                      >
+                        Edit
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item border-radius-md"
+                        href="#"
+                        onClick={(e) => handleDelete(e, swimmer.id)}
+                      >
+                        <span style={{ color: "red" }}>Delete</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="card card-profile card-plain ">
+          <div
+            className="card-header pb-0"
+            style={{ backgroundColor: "#D0F1DE " }}
+          >
+            <div className="row">
+              <div className="col-lg-10 col-7">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <h6>
+                      {" "}
+                      <small>Username:</small>{" "}
+                      <strong>{swimmer.username}</strong>
+                    </h6>
+                    <p className="text-sm mb-0">
+                      <small>Swimmer Email</small>
+
+                      <p className="mb-1 d-md-none d-block text-sm font-weight-bold text-darker">
+                        {swimmer.username}
+                      </p>
+                      <p className="mb-0 text-xs  text-warning text-gradient  mb-4">
+                        <a href={`mailto:${swimmer.email}`}>{swimmer.email}</a>
+                      </p>
+
+                      <ViewUser swimmer={swimmer} key={swimmer.id} />
+                    </p>
+                    <p>Group {swimmer.userType}</p>
+                  </div>
+                  <div className="col-sm-12">
+                    <button
+                      className="btn btn-outline-secondary"
+                      onClick={(e) => addMembers(e, swimmer.id)}
+                    >
+                      Add Members
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-2 col-5  text-end">
+                <div className="dropdown float-lg-end pe-4">
+                  <a
+                    className="cursor-pointer"
+                    id="dropdownTable"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i className="fa fa-ellipsis-v text-secondary" />
+                  </a>
+                  <ul
+                    className="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5"
+                    aria-labelledby="dropdownTable"
+                  >
+                    <li>
+                      <a
+                        className="dropdown-item border-radius-md"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#modal-default${swimmer.id}`}
+                      >
+                        View More Details
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item border-radius-md"
+                        onClick={(e) => edit(e, swimmer.id)}
+                      >
+                        Edit
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item border-radius-md"
+                        href="#"
+                        onClick={(e) => handleDelete(e, swimmer.id)}
+                      >
+                        <span style={{ color: "red" }}>Delete</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Toaster />
     </div>
   );

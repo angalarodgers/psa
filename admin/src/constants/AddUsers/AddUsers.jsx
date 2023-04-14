@@ -10,6 +10,7 @@ const AddUsers = () => {
     user: "",
     password: "",
     userAge: "none",
+    registeredAs: "",
   });
 
   const handleChange = (e) => {
@@ -27,6 +28,8 @@ const AddUsers = () => {
         toast.error("Username Is requires!");
       } else if (inputs.user.length === 0) {
         toast.error("User Is requires!");
+      } else if (inputs.userAge.length === 0) {
+        toast.error("User Age Is requires!");
       } else {
         try {
           const res = await makeRequest.post("/users/addUser", inputs);
@@ -47,6 +50,7 @@ const AddUsers = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="col-md-4">
       <div
@@ -135,6 +139,27 @@ const AddUsers = () => {
                         value={inputs.username}
                       />
                     </div>
+                    {inputs.user == "customer" && (
+                      <>
+                        <label>Register As :</label>
+                        <div className="input-group mb-3">
+                          <select
+                            className="form-control"
+                            id="exampleFormControlSelect1"
+                            name="registeredAs"
+                            onChange={handleChange}
+                            value={inputs.registeredAs}
+                          >
+                            <option value="">
+                              --Please choose an option--
+                            </option>
+                            <option value={"individual"}>Individual</option>
+                            <option value={"group"}>Group</option>
+                            <option value={"none"}>Change Later</option>
+                          </select>
+                        </div>
+                      </>
+                    )}
 
                     <div className="text-center">
                       <button

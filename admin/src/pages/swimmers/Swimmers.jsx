@@ -23,16 +23,6 @@ const Swimmers = () => {
           </div>
 
           <div className="col-sm-6">
-            <a
-              href="/classes"
-              className="btn btn-icon btn-3 btn-primary text-right m-2 mr-auto"
-              type="button"
-            >
-              <span className="btn-inner--icon">
-                <i className="ni ni-button-plus" />
-              </span>
-              <span className="btn-inner--text">Assign Class</span>
-            </a>
             <button
               className="btn btn-icon btn-3 btn-primary text-right m-2 mr-auto"
               type="button"

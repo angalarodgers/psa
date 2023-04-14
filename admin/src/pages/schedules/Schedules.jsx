@@ -10,6 +10,13 @@ const Schedules = () => {
   return (
     <>
       <div className="nav-wrapper position-relative end-0">
+        <div className="row">
+          <div className="col-md-3">
+            <a href="/add-class" className="btn btn-outline-secondary">
+              Add Classes
+            </a>
+          </div>
+        </div>
         <div>
           <ul className="nav nav-pills nav-fill p-1" role="tablist">
             <li className="nav-item" role="presentation">

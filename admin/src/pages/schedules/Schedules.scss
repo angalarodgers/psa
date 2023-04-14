@@ -13,3 +13,78 @@
   width: 100%;
   box-sizing: border-box;
 }
+
+.ant-picker-calendar {
+  font-size: 12px;
+}
+
+.ant-picker-cell {
+  padding: 2px;
+  height: 28px;
+  line-height: 28px;
+}
+
+.ant-picker-cell-inner {
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #f4f4f4;
+}
+
+.react-calendar {
+  width: 100%;
+  max-width: 600px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  font-family: "Open Sans", sans-serif;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px 8px 0 0;
+  padding: 16px;
+}
+
+.react-calendar__navigation button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333333;
+}
+
+.react-calendar__navigation button:hover {
+  color: #666666;
+}
+
+.react-calendar__navigation__label {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.react-calendar__month-view__days__day {
+  font-size: 16px;
+  color: #333333;
+}
+
+.react-calendar__tile--active {
+  background-color: #0088cc;
+  color: #ffffff;
+  border-radius: 50%;
+}
+
+.hover-effect:hover {
+  background-color: yellow;
+}

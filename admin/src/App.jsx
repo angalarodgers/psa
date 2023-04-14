@@ -30,6 +30,8 @@ import UserProfile from "./pages/profile/UserProfile";
 import Classes from "./pages/classes/Classes";
 import Messages from "./pages/messages/Messages";
 import Edit from "./pages/swimmers/Edit";
+import AddGroupMembers from "./pages/swimmers/AddGroupMembers";
+import AddClass from "./pages/schedules/AddClass";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -120,6 +122,14 @@ function App() {
         {
           path: "/edit-swimmer",
           element: <Edit />,
+        },
+        {
+          path: "/add-members",
+          element: <AddGroupMembers />,
+        },
+        {
+          path: "/add-class",
+          element: <AddClass />,
         },
       ],
     },

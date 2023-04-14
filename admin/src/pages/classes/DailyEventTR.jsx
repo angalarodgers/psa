@@ -11,6 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import EventPercentage from "../../components/daily-calendar/EventPercentage";
 import "./stl.css";
 import { makeRequest } from "../../axios";
+import EditClass from "./EditClass";
 
 const DailyEventTR = ({ event }) => {
   const [percentage, setPercentage] = useState(0);
@@ -32,12 +33,13 @@ const DailyEventTR = ({ event }) => {
   };
   const navigate = useNavigate();
   const assignStudent = (e, eventId) => {
-    navigate({
-      pathname: "/assign-class",
-      search: createSearchParams({
-        id: eventId,
-      }).toString(),
-    });
+    e.preventDefault();
+    // navigate({
+    //   pathname: "/assign-class",
+    //   search: createSearchParams({
+    //     id: eventId,
+    //   }).toString(),
+    // });
   };
 
   const viewMembers = (e, eventID) => {
@@ -97,7 +99,7 @@ const DailyEventTR = ({ event }) => {
   };
   return (
     <>
-      <tr>
+      <tr style={{ fontSize: "12px" }}>
         <td>
           <div className="d-flex px-2 py-1">
             <div>
@@ -107,20 +109,24 @@ const DailyEventTR = ({ event }) => {
                 alt="xd"
               />
             </div>
-            <div className="d-flex flex-column justify-content-center">
+            <div
+              className="d-flex flex-column justify-content-center"
+              style={{ fontSize: "12px" }}
+            >
               <a href="#" onClick={(e) => viewMembers(e, event.id)}>
-                <h6 className="mb-0 text-sm">{event.title}</h6>
+                <p className="mb-0 text-sm" style={{ fontSize: "11px" }}>
+                  <small>ID: {event.id}</small> &nbsp;
+                  {event.title} / <strong>{event.student_name}</strong>
+                </p>
               </a>
             </div>
           </div>
         </td>
-        <td className="align-middle text-center text-sm">
+        <td className="">
           <div className="avatar-group mt-2">{event.trainer}</div>
         </td>
+
         <td>
-          <span>{event.noStudents}</span>
-        </td>
-        <td className="align-middle text-center text-sm">
           <span>{event.ageGroup}</span>
         </td>
         <td className="align-middle text-center text-sm">
@@ -133,10 +139,12 @@ const DailyEventTR = ({ event }) => {
         <td>
           <button
             type="button"
-            className="btn btn-default mx-2"
+            className="btn btn-outline-info mx-2"
+            data-bs-toggle="modal"
+            data-bs-target={`#exampleModal${event.id}`}
             onClick={(e) => assignStudent(e, event.id)}
           >
-            Assign Students
+            Edit
           </button>
           <button
             type="button"
@@ -145,6 +153,7 @@ const DailyEventTR = ({ event }) => {
           >
             Delete
           </button>
+          <EditClass key={event.id} event={event} />
         </td>
 
         <Toaster />

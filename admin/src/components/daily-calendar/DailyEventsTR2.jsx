@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import EventPercentage from "./EventPercentage";
 
-const DailyEventTR = ({ event }) => {
+const DailyEventsTR2 = ({ event }) => {
   const [percentage, setPercentage] = useState(0);
 
   const date = new Date(event.date); // Parse the event date string into a Date object
@@ -53,8 +53,8 @@ const DailyEventTR = ({ event }) => {
   };
   return (
     <>
-      {!isTimePassed() ? (
-        <tr>
+      {isTimePassed() ? (
+        <tr style={{ backgroundColor: "lightgray" }}>
           <td>
             <div className="d-flex px-2 py-1">
               <div>
@@ -65,14 +65,10 @@ const DailyEventTR = ({ event }) => {
                 />
               </div>
               <div className="d-flex flex-column justify-content-center">
-                <a href="#" onClick={(e) => viewMembers(e, event.id)}>
-                  <h6 className="mb-0 text-sm">
-                    {event.title} / {event.student_name} @{" "}
-                    <span style={{ color: "darkgreen" }}>
-                      <strong>{event.startTime}</strong>
-                    </span>
-                  </h6>
-                </a>
+                <h6 className="mb-0 text-sm">
+                  {" "}
+                  {event.title} / {event.student_name} @ {event.startTime}
+                </h6>
               </div>
             </div>
           </td>
@@ -82,7 +78,7 @@ const DailyEventTR = ({ event }) => {
             </div>
           </td>
 
-          <td>
+          <td className="align-middle text-center text-sm">
             <span>{event.ageGroup}</span>
           </td>
           <td className="align-middle text-center text-sm">
@@ -96,21 +92,24 @@ const DailyEventTR = ({ event }) => {
               <div className="progress-info">
                 <div className="progress-percentage">
                   <span className="text-xs font-weight-bold">
-                    0%
+                    100%
                     {/* <TimeDifferencePercentage start={event.s} end={event.e} /> */}
                   </span>
                 </div>
               </div>
               <div className="progress">
                 <div
-                  className={`progress-bar bg-gradient-info w-${0}`}
+                  className={`progress-bar bg-gradient-info w-${100}`}
                   role="progressbar"
-                  aria-valuenow={0}
+                  aria-valuenow={100}
                   aria-valuemin={0}
                   aria-valuemax={100}
                 />
               </div>
             </div>
+          </td>
+          <td>
+            <span>Class is over</span>
           </td>
         </tr>
       ) : (
@@ -120,4 +119,4 @@ const DailyEventTR = ({ event }) => {
   );
 };
 
-export default DailyEventTR;
+export default DailyEventsTR2;

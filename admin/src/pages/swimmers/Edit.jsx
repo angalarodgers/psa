@@ -58,9 +58,17 @@ const Edit = () => {
       alert("Please make changes before saving");
       return;
     }
-    console.log(editedUser);
+
+    // Create a new object that excludes the createdAt property
+    const updatedUser = Object.keys(editedUser)
+      .filter((key) => key !== "createdAt")
+      .reduce((obj, key) => {
+        obj[key] = editedUser[key];
+        return obj;
+      }, {});
+
     makeRequest
-      .post("/users/editUser", editedUser)
+      .post("/users/editUser", updatedUser)
       .then(() => {
         console.log(editedUser);
         setSelectedUser(null);
@@ -146,13 +154,19 @@ const Edit = () => {
                   <div className="form-group">
                     <label>
                       Age Group:
-                      <input
-                        type="text"
+                      <select
                         name="userAge"
+                        id="userAge"
                         className="form-control"
-                        value={editedUser.userAge}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value={editedUser.userAge}>
+                          {editedUser.userAge}
+                        </option>
+                        <option value="">--Select Anothe Option--</option>
+                        <option value="Child">Child</option>
+                        <option value="Adult">Adult</option>
+                      </select>
                     </label>
                   </div>
                 </form>

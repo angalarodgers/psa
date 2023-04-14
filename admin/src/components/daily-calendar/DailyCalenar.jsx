@@ -22,6 +22,7 @@ const DailyCalenar = () => {
   const [desc, setDesc] = useState("");
   const [newUsers, setNewUsers] = useState([]);
   const [trainers, setTrainers] = useState([]);
+  const [childrens, setChildren] = useState([]);
   const { acisLoading, acerror, acdata } = useQuery("GetAllClients", () =>
     makeRequest.get("/users/getTrainers").then((res) => {
       setTrainers(res.data);
@@ -39,9 +40,37 @@ const DailyCalenar = () => {
   const { cisLoading, error, data } = useQuery(`ordersAll`, () =>
     makeRequest.get("/events/getEvents").then((res) => {
       setCountEvents(res.data);
+      console.log(res.data);
       return res.data;
     })
   );
+
+  const { chcisLoading, cherror, chdata } = useQuery(`getChildren`, () =>
+    makeRequest.get("/users/getChildren").then((res) => {
+      setChildren(res.data);
+      console.log(res.data);
+      return res.data;
+    })
+  );
+
+  const combinedArray = newUsers.map((user) => {
+    const childrenOfUser = childrens.filter(
+      (child) => child.user_id === user.id
+    );
+    const childrenWithInfo = childrenOfUser.map((child) => {
+      const childInfo = newUsers.find((u) => u.id === child.child_id);
+      return {
+        ...child,
+        ...childInfo,
+      };
+    });
+    const count = childrenWithInfo.length;
+    return {
+      ...user,
+      children: childrenWithInfo,
+      count: count,
+    };
+  });
 
   const handleChange = (time, timeString) => {
     const start = time.format("HH:mm:ss");
@@ -139,14 +168,28 @@ const DailyCalenar = () => {
       <ul>
         {eventList.map((event, index) => (
           <li key={index}>
-            <strong>{event.title}</strong>: {event.ageGroup}
+            {event.ageGroup} : <strong>{event.student_name}</strong> <br />
+            <span>
+              Trainer : <strong>{event.trainer}</strong> <br />
+            </span>
+            <span>Description: {event.description}</span>
             <p>
-              Description: <small>{event.description}</small> <br />
-              Starts At : <strong>{event.startTime}</strong>, Ends At :{" "}
-              <strong>{event.endTime}</strong>
+              Start Time:{" "}
+              <small>
+                <strong>{event.startTime}</strong>
+              </small>
+              , End Time:{" "}
+              <small>
+                <strong>{event.endTime}</strong>
+              </small>
             </p>
           </li>
         ))}
+        <div>
+          <a href="/add-class">
+            <button className="btn btn-outline-secondary">Add Class</button>
+          </a>
+        </div>
       </ul>
     );
   };
@@ -154,6 +197,8 @@ const DailyCalenar = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  console.log(combinedArray);
 
   return (
     <>
@@ -168,7 +213,8 @@ const DailyCalenar = () => {
         onCancel={closeModal}
         footer={null}
       >
-        <Form onFinish={handleFormSubmit}>
+        {selectedDate && renderEventList(selectedDate)}
+        <Form onFinish={handleFormSubmit} style={{ display: "none" }}>
           <Form.Item
             label="Swimmer"
             name="title"
@@ -192,6 +238,31 @@ const DailyCalenar = () => {
                   ))}
             </Select>
           </Form.Item>
+          <Form.Item
+            label="Select Child"
+            name="ageGroup"
+            rules={[{ required: true, message: "Please select a child" }]}
+          >
+            <Select>
+              <Select.Option value="">--Select Child --</Select.Option>
+              {acerror
+                ? "Something Went Wring"
+                : acisLoading
+                ? "Loading"
+                : combinedArray.map((user) =>
+                    user.children.map((child) => (
+                      <Select.Option
+                        value={child.child_id}
+                        key={child.child_id}
+                      >
+                        {child.Child_id} / {user.username} / {child.username} /{" "}
+                        {child.userAge}
+                      </Select.Option>
+                    ))
+                  )}
+            </Select>
+          </Form.Item>
+
           <Form.Item
             label="Select Age Group"
             name="ageGroup"
