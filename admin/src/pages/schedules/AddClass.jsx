@@ -65,14 +65,13 @@ const getTodayEvents = async (selectedDate, ageGroup) => {
 };
 
 const countByTime = (todayEvents, startTime) => {
-  console.log(startTime);
   const filteredArray =
     todayEvents !== undefined && startTime !== undefined
       ? todayEvents.filter(
           (obj) => obj.startTime.startsWith(startTime) && startTime !== ""
         )
       : [];
-  console.log(filteredArray);
+
   return filteredArray;
 };
 
@@ -144,15 +143,18 @@ const AddClass = () => {
   }
 
   useEffect(() => {
-    const year = selectedDate.getFullYear();
-    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
-    const day = String(selectedDate.getDate()).padStart(2, "0");
-    const formattedDate = `${year}-${month}-${day}`;
-    setSelectedDate(formattedDate);
+    if (selectedDate) {
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(selectedDate.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`;
+      setSelectedDate(formattedDate);
+    }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(inputs);
     if (inputs.length !== 0) {
       inputs.date = selectedDate;
       setInputs(inputs);
@@ -169,9 +171,11 @@ const AddClass = () => {
     inputs.ageGroup = event.target.value;
     setInputs(inputs);
     setAgeGroup(event.target.value);
+    console.log(inputs);
   }
 
   function handleTimeChange(time) {
+    console.log(time);
     try {
       if (time) {
         if (inputs.ageGroup) {
@@ -190,6 +194,58 @@ const AddClass = () => {
             .format("HH:mm");
           inputs.endTime = newTime;
           setInputs(inputs);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function convertTo24Hour(time) {
+    const [hours, minutes] = time.split(":");
+    const period = time.slice(-2); // extract AM/PM
+    const isPM = period.toUpperCase() === "PM";
+
+    let convertedHours = parseInt(hours, 10);
+    if (isPM && convertedHours !== 12) {
+      convertedHours += 12;
+    } else if (!isPM && convertedHours === 12) {
+      convertedHours = 0;
+    }
+
+    return `${convertedHours.toString().padStart(2, "0")}:${minutes}`;
+  }
+
+  function handleSelectTimeChange(time) {
+    console.log(time);
+    try {
+      if (time) {
+        if (inputs.ageGroup) {
+          const [hours, minutes] = time.split(":");
+          const start = new Date().setHours(hours, minutes, 0, 0);
+          if (inputs.ageGroup == "Child") {
+            const end = new Date(start + 45 * 60000);
+
+            const formattedEndTime = end.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            const endTime = convertTo24Hour(formattedEndTime);
+            inputs.endTime = endTime;
+            inputs.startTime = time;
+            setInputs(inputs);
+          } else {
+            const end = new Date(start + 60 * 60000);
+
+            const formattedEndTime = end.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            const endTime = convertTo24Hour(formattedEndTime);
+            inputs.endTime = endTime;
+            inputs.startTime = time;
+            setInputs(inputs);
+          }
         }
       }
     } catch (error) {
@@ -220,7 +276,7 @@ const AddClass = () => {
                           </strong>
                           <br />
                           Available Slots ={" "}
-                          {3 - parseInt(todayEventsByTime.length)}
+                          {6 - parseInt(todayEventsByTime.length)}
                         </>
                       ) : (
                         <>
@@ -306,6 +362,55 @@ const AddClass = () => {
                             format="h:mm A"
                             onChange={handleTimeChange}
                           />
+                          <span style={{ display: "none" }}>
+                            {inputs.ageGroup == "Child" ? (
+                              <select
+                                className="form-control"
+                                onChange={(e) =>
+                                  handleSelectTimeChange(e.target.value)
+                                }
+                              >
+                                <option value="07:00">07:00 - 07:45 AM</option>
+                                <option value="07:45">07:45 - 08:30 AM</option>
+                                <option value="08:30">08:30 - 09:15 AM</option>
+                                <option value="09:15">09:15 - 10:00 AM</option>
+                                <option value="10:00">10:00 - 10:45 AM</option>
+                                <option value="10:45">10:45 - 11:30 AM</option>
+                                <option value="11:30">11:30 - 12:15 PM</option>
+                                <option value="12:15">12:15 - 01:00 PM</option>
+                                <option value="13:00">01:00 - 01:45 PM</option>
+                                <option value="13:45">01:45 - 02:30 PM</option>
+                                <option value="14:30">02:30 - 03:15 PM</option>
+                                <option value="15:15">03:15 - 04:00 PM</option>
+                                <option value="16:00">04:00 - 04:45 PM</option>
+                                <option value="16:45">04:45 - 05:30 PM</option>
+                                <option value="17:30">05:30 - 06:15 PM</option>
+                                <option value="18:15">06:15 - 07:00 PM</option>
+                              </select>
+                            ) : (
+                              <select
+                                className="form-control"
+                                onChange={(e) =>
+                                  handleSelectTimeChange(e.target.value)
+                                }
+                              >
+                                <option value="07:00">07:00 - 08:00 AM</option>
+                                <option value="08:00">08:00 - 09:00 AM</option>
+                                <option value="09:00">09:00 - 10:00 AM</option>
+                                <option value="10:00">10:00 - 11:00 AM</option>
+                                <option value="11:00">
+                                  11:00 - 12:00 NOON
+                                </option>
+                                <option value="12:00">12:00 - 01:00 PM</option>
+                                <option value="13:00">01:00 - 02:00 PM</option>
+                                <option value="14:00">02:00 - 03:00 PM</option>
+                                <option value="15:00">03:00 - 04:00 PM</option>
+                                <option value="16:00">04:00 - 05:00 PM</option>
+                                <option value="17:00">05:00 - 06:00 PM</option>
+                                <option value="18:00">06:00 - 07:00 PM</option>
+                              </select>
+                            )}
+                          </span>
                           <a
                             className="badge bg-gradient-primary mt-4"
                             style={{ cursor: "pointer" }}

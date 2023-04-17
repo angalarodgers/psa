@@ -48,7 +48,7 @@ const Main = () => {
     event.preventDefault();
 
     const res = await axios
-      .post("https://api.proswimacademykenya.info/api/auth/saveAsRead", inputs)
+      .post("http://localhost:5000/api/auth/saveAsRead", inputs)
       .then((response) => {
         console.log(response);
         toast.success("Saved!");

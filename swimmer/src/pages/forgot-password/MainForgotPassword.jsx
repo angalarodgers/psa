@@ -3,12 +3,15 @@ import { Link, useNavigate, createSearchParams } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import toast, { Toaster } from "react-hot-toast";
 import { makeRequest } from "../../axios";
+import Terms from "../register/Terms";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const MainForgotPassword = () => {
   const [inputs, setInputs] = useState({
     email: "",
+    hasRead: "",
   });
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
@@ -45,6 +48,10 @@ const MainForgotPassword = () => {
       }
     }
   };
+  const handleShow = () => {
+    setShowModal(true);
+    console.log(showModal);
+  };
   return (
     <main className="main-content  mt-0">
       <section>
@@ -74,7 +81,38 @@ const MainForgotPassword = () => {
                           name="email"
                           onChange={handleChange}
                           value={inputs.email}
+                          onClick={handleShow}
                         />
+                      </div>
+                      {showModal && <Terms />}
+                      <div className="form-check form-check-info text-left">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          defaultValue
+                          id="flexCheckDefault"
+                          name="hasRead"
+                          onChange={(e) => {
+                            setInputs((prev) => ({
+                              ...prev,
+                              [e.target.name]: e.target.checked,
+                            }));
+                            console.log(inputs);
+                          }}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="flexCheckDefault"
+                        >
+                          I agree the{" "}
+                          <a
+                            href="/psak-terms-of-service"
+                            className="text-dark font-weight-bolder"
+                            target="_blank"
+                          >
+                            Terms and Conditions
+                          </a>
+                        </label>
                       </div>
 
                       <div className="text-center">

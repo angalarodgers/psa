@@ -2,7 +2,8 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import SwimmingQuote from "./SwimmingQuote";
+import TermsAndConditions from "./TermsAndConditions";
+import Terms from "./Terms";
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const RegMain = () => {
   const [inputs, setInputs] = useState({
@@ -11,7 +12,9 @@ const RegMain = () => {
     password1: "",
     username: "",
     user: "customer",
+    hasRead: "",
   });
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,6 +51,11 @@ const RegMain = () => {
       }
     }
   };
+
+  const handleShow = () => {
+    setShowModal(true);
+    console.log(showModal);
+  };
   return (
     <main className="main-content  mt-0">
       <section className="min-vh-100 mb-8">
@@ -63,7 +71,7 @@ const RegMain = () => {
               <div className="col-lg-5 text-center mx-auto">
                 <h1 className="text-white mb-2 mt-5">Welcome!</h1>
                 <p className="text-lead text-white">
-                  <SwimmingQuote />
+                  The best place to learn how to swimm
                 </p>
               </div>
             </div>
@@ -215,14 +223,46 @@ const RegMain = () => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Name"
+                        placeholder="username"
                         aria-label="Name"
                         aria-describedby="email-addon"
                         name="username"
                         onChange={handleChange}
                         value={inputs.username}
+                        onClick={handleShow}
                       />
                     </div>
+                    {showModal && <Terms />}
+                    <div className="form-check form-check-info text-left">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        defaultValue
+                        id="flexCheckDefault"
+                        name="hasRead"
+                        onChange={(e) => {
+                          setInputs((prev) => ({
+                            ...prev,
+                            [e.target.name]: e.target.checked,
+                          }));
+                          console.log(inputs);
+                        }}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="flexCheckDefault"
+                      >
+                        I agree the{" "}
+                        <a
+                          href="/psak-terms-of-service"
+                          className="text-dark font-weight-bolder"
+                          target="_blank"
+                        >
+                          Terms and Conditions
+                        </a>
+                      </label>
+                    </div>
+                    <br />
                     <div className="mb-3">
                       <input
                         type="email"
@@ -259,28 +299,7 @@ const RegMain = () => {
                         value={inputs.password1}
                       />
                     </div>
-                    <div className="form-check form-check-info text-left">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        defaultValue
-                        id="flexCheckDefault"
-                        defaultChecked
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="flexCheckDefault"
-                      >
-                        I agree the{" "}
-                        <a
-                          href="/psak-terms-of-service"
-                          className="text-dark font-weight-bolder"
-                          target="_blank"
-                        >
-                          Terms and Conditions
-                        </a>
-                      </label>
-                    </div>
+
                     <div className="text-center">
                       <button
                         type="button"
@@ -290,12 +309,10 @@ const RegMain = () => {
                         Sign up
                       </button>
                     </div>
+
                     <p className="text-sm mt-3 mb-0">
                       Already have an account?{" "}
-                      <a
-                        href="javascript:;"
-                        className="text-dark font-weight-bolder"
-                      >
+                      <a href="/" className="text-dark font-weight-bolder">
                         Sign in
                       </a>
                     </p>
@@ -306,102 +323,7 @@ const RegMain = () => {
           </div>
         </div>
       </section>
-      {/* -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- */}
-      <footer className="footer py-5">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8 mb-4 mx-auto text-center">
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Company
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                About Us
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Team
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Products
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Blog
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-5 me-3 mb-sm-0 mb-2"
-              >
-                Pricing
-              </a>
-            </div>
-            <div className="col-lg-8 mx-auto text-center mb-4 mt-2">
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-4 me-4"
-              >
-                <span className="text-lg fab fa-dribbble" />
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-4 me-4"
-              >
-                <span className="text-lg fab fa-twitter" />
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-4 me-4"
-              >
-                <span className="text-lg fab fa-instagram" />
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-4 me-4"
-              >
-                <span className="text-lg fab fa-pinterest" />
-              </a>
-              <a
-                href="javascript:;"
-                target="_blank"
-                className="text-secondary me-xl-4 me-4"
-              >
-                <span className="text-lg fab fa-github" />
-              </a>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-8 mx-auto text-center mt-1">
-              <p className="mb-0 text-secondary">
-                Copyright © Soft by Creative Tim.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
-      {/* -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- */}
+
       <Toaster />
     </main>
   );

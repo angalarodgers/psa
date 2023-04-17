@@ -60,7 +60,7 @@ const Dashboard = () => {
   );
 
   const today = new Date().toISOString().slice(0, 10); // Get today's date in the format "2023-02-27"
-  const todaysEvents = events.filter((event) => event.date === today); // Filter the events to only include those with today's date
+  const todaysEvents = events?.filter((event) => event.date === today) || []; // Filter the events to only include those with today's date
 
   const total = pays.reduce((acc, item) => acc + item.amount, 0);
   const handleClick = (child) => {
@@ -86,13 +86,12 @@ const Dashboard = () => {
   };
 
   const combined =
-    children &&
-    children.map((user) => {
-      const eventsCount = allEvents.filter(
-        (event) => event.student_name === user.username
-      ).length;
+    children?.map((user) => {
+      const eventsCount =
+        allEvents?.filter((event) => event.student_name === user.username)
+          ?.length || 0;
       return { ...user, count: eventsCount };
-    });
+    }) || [];
 
   return (
     <>

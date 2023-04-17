@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeRequest } from "../../axios";
 import { css } from "@emotion/react";
 import { BeatLoader } from "react-spinners";
@@ -38,12 +38,25 @@ const EditClass = ({ event }) => {
 
   const handleUpdate = () => {
     setLoading(true);
+
+    const newdate = new Date(`January 1, 2023 ${startTime}`);
+    const start = newdate.toLocaleTimeString("en-US", { hour12: false });
+
+    var end = null;
+    if (endTime.endsWith("PM")) {
+      // Remove "PM" from the time string
+      end = endTime.slice(0, -2);
+    } else {
+      end = endTime.slice(0, -2);
+    }
+
+    console.log(end);
     const updatedObject = {
       id,
       title,
       date,
-      startTime,
-      endTime,
+      start,
+      end,
       trainer,
       student_name: studentName,
       noStudents,
@@ -61,6 +74,71 @@ const EditClass = ({ event }) => {
         console.error(error);
       });
   };
+
+  function convertTo24Hour(time) {
+    const [hours, minutes] = time.split(":");
+    const period = time.slice(-2); // extract AM/PM
+    const isPM = period.toUpperCase() === "PM";
+
+    let convertedHours = parseInt(hours, 10);
+    if (isPM && convertedHours !== 12) {
+      convertedHours += 12;
+    } else if (!isPM && convertedHours === 12) {
+      convertedHours = 0;
+    }
+
+    return `${convertedHours.toString().padStart(2, "0")}:${minutes}`;
+  }
+
+  useEffect(() => {
+    const [hours, minutes] = startTime.split(":");
+    const start = new Date().setHours(hours, minutes, 0, 0);
+    if (object.ageGroup == "Child") {
+      const end = new Date(start + 45 * 60000);
+
+      const formattedEndTime = end.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const endTime = convertTo24Hour(formattedEndTime);
+      setEndTime(endTime);
+    } else {
+      const end = new Date(start + 60 * 60000);
+
+      const formattedEndTime = end.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const endTime = convertTo24Hour(formattedEndTime);
+      setEndTime(endTime);
+    }
+  }, [startTime]);
+
+  function sortUsers(users) {
+    if (!users) {
+      return [];
+    }
+
+    return users.sort((a, b) => {
+      if (
+        a.username.toLowerCase().startsWith("a") &&
+        !b.username.toLowerCase().startsWith("a")
+      ) {
+        return -1;
+      } else if (
+        !a.username.toLowerCase().startsWith("a") &&
+        b.username.toLowerCase().startsWith("a")
+      ) {
+        return 1;
+      } else {
+        return a.username.localeCompare(b.username);
+      }
+    });
+  }
+
+  sortUsers(users);
+  sortUsers(trainers);
+
   return (
     <div
       className="modal fade"
@@ -138,26 +216,55 @@ const EditClass = ({ event }) => {
                 </div>
                 <div className="col-sm-6">
                   {" "}
-                  <label>
-                    Start Time:
-                    <input
-                      type="time"
+                  <label>Start Time:</label>
+                  {object.ageGroup == "Child" ? (
+                    <select
                       className="form-control"
                       value={startTime}
                       onChange={(e) => setStartTime(e.target.value)}
-                    />
-                  </label>
+                    >
+                      <option value={startTime}>{startTime}</option>
+                      <option value="07:00">07:00 - 07:45 AM</option>
+                      <option value="07:45">07:45 - 08:30 AM</option>
+                      <option value="08:30">08:30 - 09:15 AM</option>
+                      <option value="09:15">09:15 - 10:00 AM</option>
+                      <option value="10:00">10:00 - 10:45 AM</option>
+                      <option value="10:45">10:45 - 11:30 AM</option>
+                      <option value="11:30">11:30 - 12:15 PM</option>
+                      <option value="12:15">12:15 - 01:00 PM</option>
+                      <option value="13:00">01:00 - 01:45 PM</option>
+                      <option value="13:45">01:45 - 02:30 PM</option>
+                      <option value="14:30">02:30 - 03:15 PM</option>
+                      <option value="15:15">03:15 - 04:00 PM</option>
+                      <option value="16:00">04:00 - 04:45 PM</option>
+                      <option value="16:45">04:45 - 05:30 PM</option>
+                      <option value="17:30">05:30 - 06:15 PM</option>
+                      <option value="18:15">06:15 - 07:00 PM</option>
+                    </select>
+                  ) : (
+                    <select
+                      className="form-control"
+                      value={startTime}
+                      onChange={(e) => setStartTime(e.target.value)}
+                    >
+                      <option value={startTime}>{startTime}</option>
+                      <option value="07:00">07:00 - 08:00 AM</option>
+                      <option value="08:00">08:00 - 09:00 AM</option>
+                      <option value="09:00">09:00 - 10:00 AM</option>
+                      <option value="10:00">10:00 - 11:00 AM</option>
+                      <option value="11:00">11:00 - 12:00 NOON</option>
+                      <option value="12:00">12:00 - 01:00 PM</option>
+                      <option value="13:00">01:00 - 02:00 PM</option>
+                      <option value="14:00">02:00 - 03:00 PM</option>
+                      <option value="15:00">03:00 - 04:00 PM</option>
+                      <option value="16:00">04:00 - 05:00 PM</option>
+                      <option value="17:00">05:00 - 06:00 PM</option>
+                      <option value="18:00">06:00 - 07:00 PM</option>
+                    </select>
+                  )}
                 </div>
                 <div className="col-sm-6">
-                  <label>
-                    End Time:
-                    <input
-                      type="time"
-                      className="form-control"
-                      value={endTime}
-                      onChange={(e) => setEndTime(e.target.value)}
-                    />
-                  </label>
+                  <label className="mt-4">End Time: {endTime}</label>
                 </div>
                 <div className="col-sm-6">
                   <div className="form-group">
