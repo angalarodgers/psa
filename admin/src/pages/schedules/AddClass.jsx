@@ -68,7 +68,7 @@ const countByTime = (todayEvents, startTime) => {
   const filteredArray =
     todayEvents !== undefined && startTime !== undefined
       ? todayEvents.filter(
-          (obj) => obj.startTime.startsWith(startTime) && startTime !== ""
+          (obj) => obj.startTime.startsWith(startTime) && startTime !== "",
         )
       : [];
 
@@ -103,7 +103,7 @@ const AddClass = () => {
     getMessages,
     {
       refetchInterval: 1000,
-    }
+    },
   );
 
   const { data: todayEvents, isLoading: todayEventLoading } = useQuery(
@@ -111,7 +111,7 @@ const AddClass = () => {
     () => getTodayEvents(selectedDate, ageGroup),
     {
       refetchInterval: 1000,
-    }
+    },
   );
 
   const { data: todayEventsByTime, isLoading: todayEventLoadingByTime } =
@@ -120,7 +120,7 @@ const AddClass = () => {
       () => countByTime(todayEvents, inputs.startTime),
       {
         refetchInterval: 1000,
-      }
+      },
     );
 
   function handleDateChange(date) {
@@ -323,8 +323,7 @@ const AddClass = () => {
                   <select
                     className="form-control"
                     id="exampleFormControlSelect1"
-                    onChange={handleSelectChange}
-                  >
+                    onChange={handleSelectChange}>
                     <option value="">--Select Anothe Option--</option>
                     <option value="Adult">Adult</option>
                     <option value="Child">Child</option>
@@ -347,8 +346,7 @@ const AddClass = () => {
                     </div>
                     <div
                       className="form-group p-1"
-                      style={{ border: "1px dotted gray" }}
-                    >
+                      style={{ border: "1px dotted gray" }}>
                       <div className="row">
                         <div className="col-sm-6">
                           <label htmlFor="exampleFormControlSelect2">
@@ -368,8 +366,7 @@ const AddClass = () => {
                                 className="form-control"
                                 onChange={(e) =>
                                   handleSelectTimeChange(e.target.value)
-                                }
-                              >
+                                }>
                                 <option value="07:00">07:00 - 07:45 AM</option>
                                 <option value="07:45">07:45 - 08:30 AM</option>
                                 <option value="08:30">08:30 - 09:15 AM</option>
@@ -392,8 +389,7 @@ const AddClass = () => {
                                 className="form-control"
                                 onChange={(e) =>
                                   handleSelectTimeChange(e.target.value)
-                                }
-                              >
+                                }>
                                 <option value="07:00">07:00 - 08:00 AM</option>
                                 <option value="08:00">08:00 - 09:00 AM</option>
                                 <option value="09:00">09:00 - 10:00 AM</option>
@@ -411,13 +407,41 @@ const AddClass = () => {
                               </select>
                             )}
                           </span>
-                          <a
-                            className="badge bg-gradient-primary mt-4"
-                            style={{ cursor: "pointer" }}
-                            onClick={handleSubmit}
-                          >
-                            Add Time
-                          </a>
+                          {todayEvents && (
+                            <>
+                              {todayEventsByTime && (
+                                <>
+                                  {inputs.startTime ? (
+                                    <>
+                                      {parseInt(todayEventsByTime.length) <
+                                      6 ? (
+                                        <a
+                                          className="badge bg-gradient-primary mt-4"
+                                          style={{ cursor: "pointer" }}
+                                          onClick={handleSubmit}>
+                                          Add Time
+                                        </a>
+                                      ) : (
+                                        <strong>
+                                          <small style={{ fontSize: "12px" }}>
+                                            Classes Full
+                                          </small>
+                                        </strong>
+                                      )}
+                                    </>
+                                  ) : (
+                                    <>
+                                      <strong>
+                                        <small style={{ fontSize: "12px" }}>
+                                          Select Time
+                                        </small>
+                                      </strong>
+                                    </>
+                                  )}
+                                </>
+                              )}{" "}
+                            </>
+                          )}
                         </div>
                         <div className="col-sm-3">
                           {inputs.ageGroup && (
@@ -521,8 +545,7 @@ const AddClass = () => {
                       {todayEvents.map((message) => (
                         <li
                           key={message.id}
-                          className="shadow-lg p-3 mb-5 bg-white rounded"
-                        >
+                          className="shadow-lg p-3 mb-5 bg-white rounded">
                           <p className="shadow-inner">
                             <strong>{message.ageGroup}</strong> {message.title}{" "}
                             / Date: <strong>{message.date}</strong> / From :{" "}

@@ -11,6 +11,11 @@ import {
   createSearchParams,
 } from "react-router-dom";
 
+const getUsers = async () => {
+  const response = await makeRequest.get("/users/getCustomers");
+  return response.data;
+};
+
 const Edit = () => {
   const [searchParam] = useSearchParams();
   const swimmerId = searchParam.get("swimmerId");
@@ -22,14 +27,14 @@ const Edit = () => {
     username: "",
     email: "",
     userAge: "",
+    registeredAs: "",
   });
-  const [users, setNewUsers] = useState([]);
-  const { acisLoading, acerror, acdata } = useQuery("GetAllUsers", () =>
-    makeRequest.get(`/users/getCustomers`).then((res) => {
-      setNewUsers(res.data);
-      console.log(res.data);
-      return res.data;
-    })
+  const { data: users, isLoading: messagesLoading } = useQuery(
+    "getUsers",
+    getUsers,
+    {
+      refetchInterval: 1000,
+    }
   );
 
   const handleSelectUser = (user) => {
@@ -68,7 +73,7 @@ const Edit = () => {
       }, {});
 
     makeRequest
-      .post("/users/editUser", updatedUser)
+      .post("/users/editUser", editedUser)
       .then(() => {
         console.log(editedUser);
         setSelectedUser(null);
@@ -82,30 +87,66 @@ const Edit = () => {
       });
   };
 
+  const handleUserChange = (event) => {
+    const selectedUsername = event.target.value;
+    // Do something with the selected username, e.g. update state or perform an action
+    const selectedUser = users
+      ? users.find((user) => user.username === selectedUsername)
+      : null;
+    setSelectedUser(selectedUser);
+    setEditedUser({ ...selectedUser });
+    setIsDirty(false);
+  };
+
   return (
     <div className="container">
       <div className="row">
-        <div className="col-sm-3">
+        <div className="col-sm-3" style={{ display: "none" }}>
           <div
             className="card p-2"
             style={{ height: "80vh", overflow: "scroll" }}
           >
             <h6>User Editor</h6>
             <ul>
-              {users.map((user) => (
-                <li key={user.id} onClick={() => handleSelectUser(user)}>
-                  <button
-                    className="btn btn-primary hover"
-                    style={{ backgroundColor: "#63b3ed" }}
-                  >
-                    {user.username}
-                  </button>
-                </li>
-              ))}
+              {users &&
+                users.map((user) => (
+                  <li key={user.id} onClick={() => handleSelectUser(user)}>
+                    <button
+                      className="btn btn-primary hover"
+                      style={{ backgroundColor: "#63b3ed" }}
+                    >
+                      {user.username} / {user.email}
+                    </button>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
-        <div className="col-sm-9">
+        <div className="col-sm-12">
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="form-group">
+                <label htmlFor="exampleFormControlSelect1">Select User</label>
+                <select
+                  className="form-control"
+                  id="exampleFormControlSelect1"
+                  onChange={handleUserChange}
+                >
+                  <option value={""}>-- Select User--</option>
+                  {users &&
+                    users.map((user) => (
+                      <option key={user.id} value={user.username}>
+                        {user.username} /{"    "}
+                        <small style={{ color: "pink", fontSize: "8px" }}>
+                          {"(" + user.email + ")"}
+                        </small>
+                        <br />
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+          </div>
           <div className="card p-3 ">
             {selectedUser ? (
               <div>
@@ -166,6 +207,25 @@ const Edit = () => {
                         <option value="">--Select Anothe Option--</option>
                         <option value="Child">Child</option>
                         <option value="Adult">Adult</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  <div className="form-group">
+                    <label>
+                      Registered As:
+                      <select
+                        name="registeredAs"
+                        id="registeredAs"
+                        className="form-control"
+                        onChange={handleChange}
+                      >
+                        <option value={editedUser.registeredAs}>
+                          {editedUser.registeredAs}
+                        </option>
+                        <option value="">--Select Anothe Option--</option>
+                        <option value="individual">Individual</option>
+                        <option value="group">Group</option>
                       </select>
                     </label>
                   </div>

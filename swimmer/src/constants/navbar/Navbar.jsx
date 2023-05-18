@@ -108,7 +108,7 @@ const Navbar = () => {
                   </a>
                 </li>
 
-                <li className="mb-2">
+                {/* <li className="mb-2">
                   <a
                     className="dropdown-item border-radius-md"
                     href="/messages"
@@ -124,7 +124,7 @@ const Navbar = () => {
                       </div>
                     </div>
                   </a>
-                </li>
+                </li> */}
 
                 <li className="mb-2">
                   <a
@@ -136,7 +136,7 @@ const Navbar = () => {
                         <h6 className="text-sm font-weight-normal mb-1">
                           <span className="font-weight-bold">
                             {" "}
-                            <i className="fa fa-list"></i> &nbsp; Schedules
+                            <i className="fa fa-list"></i> &nbsp; Classes
                           </span>
                         </h6>
                       </div>

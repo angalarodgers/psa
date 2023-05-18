@@ -111,7 +111,8 @@ const Navbar = () => {
                 <li className="mb-2">
                   <a
                     className="dropdown-item border-radius-md"
-                    href="/messages"
+                    href="https://app.smartsupp.com/app/dashboard/conversations"
+                    target="_blank"
                   >
                     <div className="d-flex py-1">
                       <div className="d-flex flex-column justify-content-center">

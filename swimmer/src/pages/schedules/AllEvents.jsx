@@ -10,20 +10,44 @@ import {
 import { useQuery } from "react-query";
 import DailyEventTR from "./DailyEventTR";
 import { AuthContext } from "../../context/authContext";
+import { ClipLoader } from "react-spinners";
+
+const getMessages = async () => {
+  const response = await makeRequest.get("/events/getEvents");
+  return response.data;
+};
+
+const getUsers = async (email) => {
+  const response = await makeRequest.get("/users/getMyChildren/" + email);
+  return response.data;
+};
 
 const AllEvents = () => {
   const { currentUser } = useContext(AuthContext);
-  const [dtAll, setDtAll] = useState([]);
-  const { isLoading, error, data } = useQuery("ordersAll", () =>
-    makeRequest.get("/events/getEvents").then((res) => {
-      setDtAll(res.data);
-      return res.data;
-    })
+  const [selectedUser, setSelectedUser] = useState(currentUser.username);
+
+  const { data: dtAll, isLoading: eventsLoading } = useQuery(
+    "events",
+    getMessages,
+    {
+      refetchInterval: 1000,
+    }
   );
 
-  const filteredEvents = dtAll.filter((event) => {
-    return event.student_name === currentUser.username;
-  });
+  const { data: children, isLoading: Loading } = useQuery(
+    ["getMyChildren", currentUser.email],
+    () => getUsers(currentUser.email),
+    {
+      refetchInterval: 1000,
+    }
+  );
+
+  const filteredEvents =
+    dtAll && Array.isArray(dtAll)
+      ? dtAll.filter((event) => {
+          return event.student_name === (selectedUser || currentUser.username);
+        })
+      : [];
 
   const eventsByDate = Object.values(
     filteredEvents.reduce((acc, event) => {
@@ -51,7 +75,28 @@ const AllEvents = () => {
     })
     .flat();
   return (
-    <div className="card">
+    <div className="card mt-2">
+      <div className="card-header">
+        <div className="form-group">
+          <label htmlFor="exampleFormControlSelect1">Select Swimmer</label>
+          <select
+            className="form-control"
+            id="exampleFormControlSelect1"
+            onChange={(event) => setSelectedUser(event.target.value)}
+          >
+            <option value={""}>--Select Swimmer--</option>
+            {children && children ? (
+              children.map((child) => (
+                <option value={child.username} key={child.id}>
+                  {child.username}
+                </option>
+              ))
+            ) : (
+              <ClipLoader />
+            )}
+          </select>
+        </div>
+      </div>
       <div className="card-body px-0">
         <div className="table-responsive">
           <table className="table align-items-center mb-0">
@@ -73,13 +118,13 @@ const AllEvents = () => {
               </tr>
             </thead>
             <tbody>
-              {error
-                ? "Something Went Wring"
-                : isLoading
-                ? "Loading"
-                : myfilteredData.map((event) => (
-                    <DailyEventTR event={event} key={event.id} />
-                  ))}
+              {eventsLoading ? (
+                <ClipLoader />
+              ) : (
+                myfilteredData.map((event) => (
+                  <DailyEventTR event={event} key={event.id} />
+                ))
+              )}
             </tbody>
           </table>
         </div>

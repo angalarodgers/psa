@@ -62,6 +62,7 @@ const DailyEvents = () => {
     <div className="row">
       <div className="col-md-12 mb-2">
         <div className="card">
+          <p className="p-2">Scheduled Classes</p>
           <div className="card-body px-0">
             <div className="table-responsive">
               <table className="table align-items-center mb-0">
@@ -92,6 +93,7 @@ const DailyEvents = () => {
       </div>
       <div className="col-md-12">
         <div className="card">
+          <p className="p-2">Completed Classes</p>
           <div className="card-body px-0">
             <div className="table-responsive">
               <table className="table align-items-center mb-0">

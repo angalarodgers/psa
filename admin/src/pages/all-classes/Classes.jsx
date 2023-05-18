@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import Class from "./Class";
+import { ClipLoader } from "react-spinners";
 import { makeRequest } from "../../axios";
+import { Link, useNavigate } from "react-router-dom";
 import {
   useMutation,
   useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from "react-query";
-import { useQuery } from "react-query";
-import DailyEventTR from "./DailyEventTR";
-import { ClipLoader } from "react-spinners";
 
 const getClasses = async () => {
   const response = await makeRequest.get("/events/getEvents");
+  console.log(response.data);
   return response.data;
 };
 
@@ -23,13 +24,6 @@ const Classes = () => {
   const [sortByAgeGroup, setSortByAgeGroup] = useState("");
   const [users, setUsers] = useState([]);
   const [trainers, setTrainers] = useState([]);
-  const { data: classes, isLoading: messagesLoading } = useQuery(
-    "messages",
-    getClasses,
-    {
-      refetchInterval: 1000,
-    }
-  );
 
   const { trainerLoading, trainererror, trainerdata } = useQuery(
     "GetMyAllTrainers",
@@ -41,8 +35,16 @@ const Classes = () => {
 
   const { acisLoading, acerror, acdata } = useQuery("GetMyAllClients", () =>
     makeRequest.get("/users/getCustomers").then((res) => {
+      console.log(res.data);
       setUsers(res.data);
     })
+  );
+  const { data: classes, isLoading: messagesLoading } = useQuery(
+    "messages",
+    getClasses,
+    {
+      refetchInterval: 1000,
+    }
   );
 
   const filteredData = (classes || []).filter((item) => {
@@ -52,7 +54,10 @@ const Classes = () => {
     if (sortByTrainer && item.trainer != sortByTrainer) {
       return false;
     }
-    if (sortByStudent && item.student_name != sortByStudent) {
+    if (
+      sortByStudent &&
+      !item.student_name.toLowerCase().includes(sortByStudent.toLowerCase())
+    ) {
       return false;
     }
 
@@ -88,10 +93,10 @@ const Classes = () => {
   sortUsers(trainers);
 
   return (
-    <div className="card">
-      <div className="card-body px-0">
+    <div className="row">
+      <div className="row">
         <div className="row p-2">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="form-group">
               <label htmlFor="exampleFormControlInput1">Sort By Date</label>
               <input
@@ -103,7 +108,7 @@ const Classes = () => {
               />
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">Sort By Swimmer</label>
               <select
@@ -112,6 +117,7 @@ const Classes = () => {
                 onChange={(e) => setSortByStudent(e.target.value)}
               >
                 <option value="">--Select a Swimmer--</option>
+                <option value="None">--None--</option>
                 {acisLoading ? (
                   <ClipLoader />
                 ) : (
@@ -124,7 +130,19 @@ const Classes = () => {
               </select>
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
+            <div className="form-group">
+              <label htmlFor="exampleFormControlSelect1">Sort By Swimmer</label>
+              <input
+                className="form-control"
+                type="text"
+                name=""
+                id=""
+                onChange={(e) => setSortByStudent(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-md-2">
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">Sort By Trainer</label>
               <select
@@ -134,6 +152,7 @@ const Classes = () => {
               >
                 <option value="">--Select a Trainer--</option>
                 <option value="">--Remove This Filter--</option>
+                <option value="None">--None--</option>
                 {trainerLoading ? (
                   <ClipLoader />
                 ) : (
@@ -146,7 +165,7 @@ const Classes = () => {
               </select>
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">
                 Sort By Age Group
@@ -163,36 +182,14 @@ const Classes = () => {
             </div>
           </div>
         </div>
-        <div className="table-responsive">
-          <table className="table align-items-center mb-0">
-            <thead>
-              <tr>
-                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                  Event ID
-                </th>
-                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                  Trainer
-                </th>
-
-                <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                  Group
-                </th>
-                <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                  Time
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {messagesLoading ? (
-                <ClipLoader />
-              ) : (
-                filteredData.map((event) => (
-                  <DailyEventTR event={event} key={event.id} />
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+      </div>
+      <div className="card bg-info">
+        {messagesLoading ? (
+          <ClipLoader />
+        ) : (
+          filteredData &&
+          filteredData.map((event) => <Class event={event} key={event.id} />)
+        )}
       </div>
     </div>
   );

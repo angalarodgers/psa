@@ -11,14 +11,20 @@ import {
 import { useQuery } from "react-query";
 import DailyEventTR from "./DailyEventTR";
 
+const getMessages = async () => {
+  const response = await makeRequest.get("/events/getEvents");
+  return response.data;
+};
+
 function WeekCalendar() {
-  const [ents, setEvts] = useState([]);
   const [sd, setSd] = useState("");
-  const { isLoading, error, data } = useQuery("fetchEvents", () =>
-    makeRequest.get("/events/getEvents").then((res) => {
-      setEvts(res.data);
-      return res.data;
-    })
+
+  const { data: ents, isLoading: eventsLoading } = useQuery(
+    "events",
+    getMessages,
+    {
+      refetchInterval: 1000,
+    }
   );
 
   const getDate = (e, date) => {
@@ -28,27 +34,37 @@ function WeekCalendar() {
     }
   };
 
-  const filteredData = ents.filter((obj) => {
-    const date = new Date(obj.date).toLocaleDateString(); // convert object's date to string format
-    return date === sd;
-  });
+  const filteredData = ents
+    ? ents.filter((obj) => {
+        const date = new Date(obj.date).toLocaleDateString(); // convert object's date to string format
+        return date === sd;
+      })
+    : [];
 
   const myfilteredData = filteredData
     .filter((obj) => obj.indx !== undefined) // remove objects with undefined id
     .sort((a, b) => a.indx - b.indx); // sort objects by id in ascending order
 
-  const year = new Date().getFullYear();
-
   const weeks = [];
-  const firstDayOfYear = new Date(year, 0, 1);
+  const today = new Date(); // Get current date
+  const year = today.getFullYear(); // Get current year
+  const month = today.getMonth(); // Get current month
+
+  const firstDayOfMonth = new Date(year, month, 1); // Get the first day of the current month
+  const lastDayOfMonth = new Date(year, month + 1, 0); // Get the last day of the current month
+
   const numberOfDays =
     (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 366 : 365;
+
   for (let i = 0; i < numberOfDays; i += 7) {
     const weekStart = new Date(
-      firstDayOfYear.getTime() + i * 24 * 60 * 60 * 1000
+      firstDayOfMonth.getTime() + i * 24 * 60 * 60 * 1000
     );
     const weekEnd = new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
-    weeks.push({ start: weekStart, end: weekEnd });
+    if (weekStart.getMonth() === month || weekEnd.getMonth() === month) {
+      // Check if the week falls within the current month
+      weeks.push({ start: weekStart, end: weekEnd });
+    }
   }
 
   const [expandedWeek, setExpandedWeek] = useState(null);
@@ -67,11 +83,34 @@ function WeekCalendar() {
     }
   };
 
-  const today = new Date();
+  // Create a date object
+  const currentDate = new Date();
+
+  // Get the month value (0-11)
+  const currentMonth = currentDate.getMonth();
+
+  // Array of month names
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  // Get the current month name
+  const currentMonthName = monthNames[currentMonth];
 
   return (
     <div className="week-calendar">
-      <h2>Weeks of {year}</h2>
+      <h5>Weeks of {currentMonthName}</h5>
       <div className="row">
         <div
           className="col-sm-3"
@@ -97,7 +136,7 @@ function WeekCalendar() {
                   {expandedWeek.dates.map((date, i) => (
                     <div
                       key={i}
-                      className="date"
+                      className="btn btn-outline-secondary"
                       onClick={(e) => getDate(e, date.toLocaleDateString())}
                     >
                       {date.toLocaleDateString(undefined, { weekday: "long" })}
@@ -134,9 +173,7 @@ function WeekCalendar() {
                   </thead>
                   <tbody>
                     {filteredData.length > 0
-                      ? error
-                        ? "Something Went Wring"
-                        : isLoading
+                      ? eventsLoading
                         ? "Loading"
                         : myfilteredData.map((event) => (
                             <>

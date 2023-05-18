@@ -12,6 +12,7 @@ const saveSwimmer = async (inputs) => {
 
 const saveTrainer = async (inputs) => {
   const response = await makeRequest.post("/users/updateTrainer", inputs);
+  console.log(response.data);
   return response.data;
 };
 
@@ -278,11 +279,51 @@ const AddedTime = ({ messages, todayEvents, todayEventLoading }) => {
                               <ClipLoader />
                             ) : (
                               filteredTrainers &&
-                              filteredTrainers.map((user) => (
-                                <option key={user.id} value={user.id}>
-                                  {user.username}
-                                </option>
-                              ))
+                              filteredTrainers.map((user) => {
+                                const checkMatchingClasses = (
+                                  start,
+                                  end,
+                                  tdate,
+                                  trainer,
+                                  classes
+                                ) => {
+                                  // Loop through the array of classes
+                                  for (let i = 0; i < classes.length; i++) {
+                                    const classObj = classes[i];
+
+                                    // Check if the start time, end time, date, and trainer match the provided values
+                                    if (
+                                      classObj.startTime == start &&
+                                      classObj.endTime == end &&
+                                      classObj.date == tdate &&
+                                      classObj.trainer == trainer
+                                    ) {
+                                      // Return true if a match is found
+                                      return true;
+                                    }
+                                  }
+                                  // Return false if no match is found
+                                  return false;
+                                };
+                                const isMatch = checkMatchingClasses(
+                                  message.startTime,
+                                  message.endTime,
+                                  message.date,
+                                  user.username,
+                                  messages
+                                );
+                                // Render the Trainers component only if there's a match
+                                if (!isMatch) {
+                                  return (
+                                    <option key={user.id} value={user.id}>
+                                      {user.username}
+                                    </option>
+                                  );
+                                }
+
+                                // Return null if there's no match, so that no option is rendered
+                                return null;
+                              })
                             )}
                           </select>
                         </div>

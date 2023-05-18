@@ -28,10 +28,12 @@ import EventMembers from "./pages/event-members/EventMembers";
 import { AuthContext } from "./context/authContext";
 import UserProfile from "./pages/profile/UserProfile";
 import Classes from "./pages/classes/Classes";
+import Classesa from "./pages/all-classes/Classes";
 import Messages from "./pages/messages/Messages";
 import Edit from "./pages/swimmers/Edit";
 import AddGroupMembers from "./pages/swimmers/AddGroupMembers";
 import AddClass from "./pages/schedules/AddClass";
+import EditClass from "./pages/all-classes/EditClass";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -113,7 +115,7 @@ function App() {
         },
         {
           path: "/classes",
-          element: <Classes />,
+          element: <Classesa />,
         },
         {
           path: "/messages",
@@ -130,6 +132,10 @@ function App() {
         {
           path: "/add-class",
           element: <AddClass />,
+        },
+        {
+          path: "/edit-class",
+          element: <EditClass />,
         },
       ],
     },

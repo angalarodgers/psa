@@ -6,9 +6,7 @@ import RegMain from "./RegMain";
 const Register = () => {
   return (
     <>
-      <LoginNavbar />
       <RegMain />
-      <LoginFooter />
     </>
   );
 };

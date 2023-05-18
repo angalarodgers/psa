@@ -91,7 +91,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link  " href="/schedules">
+            <a className="nav-link active " href="/schedules">
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"
@@ -136,7 +136,7 @@ const Sidebar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link  " href="/payments">
+            <a className="nav-link  active" href="/payments">
               <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg
                   width="12px"

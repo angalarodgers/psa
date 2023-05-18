@@ -69,7 +69,9 @@ const RegMain = () => {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-lg-5 text-center mx-auto">
-                <h1 className="text-white mb-2 mt-5">Welcome!</h1>
+                <h1 className="text-white mb-2 mt-5">
+                  Pro Swim Academy <small>Kenya</small>
+                </h1>
                 <p className="text-lead text-white">
                   The best place to learn how to swimm
                 </p>

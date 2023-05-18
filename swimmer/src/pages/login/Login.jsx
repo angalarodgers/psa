@@ -7,9 +7,7 @@ import Main from "./Main";
 const Login = () => {
   return (
     <>
-      <LoginNavbar />
       <Main />
-      <LoginFooter />
     </>
   );
 };
